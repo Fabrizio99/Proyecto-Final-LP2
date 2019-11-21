@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabri
  */
-@WebServlet(name = "ServletPrincipal", urlPatterns = {"/ServletPrincipal","/nosotros","/contacto"})
+@WebServlet(name = "ServletPrincipal", urlPatterns = {"/ServletPrincipal","/nosotros","/contacto","/carroCompras"})
 public class ServletPrincipal extends HttpServlet {
 
     /**
@@ -37,6 +37,9 @@ public class ServletPrincipal extends HttpServlet {
         }
         if(request.getServletPath().equals("/contacto")){
             request.getRequestDispatcher("WEB-INF/Contacto.jsp").forward(request, response);
+        }
+        if(request.getServletPath().equals("/carroCompras")){
+            request.getRequestDispatcher("WEB-INF/CarroCompras.jsp").forward(request, response);
         }
     }
 
