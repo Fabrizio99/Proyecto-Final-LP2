@@ -110,8 +110,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="text-center">
-                                        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+                                    <tr class="text-center product-item">
+                                        <td class="product-remove"><a href="#" class="remove-button"><span class="ion-ios-close"></span></a></td>
 
                                         <td class="image-prod"><div class="img" style="background-image:url(images/blancaFlor.jpg);"></div></td>
 
@@ -138,7 +138,36 @@
                                             </div>
                                         </td>
 
-                                        <td class="total">S/5.99</td>
+                                        <td class="total"></td>
+                                    </tr>
+                                    <tr class="text-center product-item">
+                                        <td class="product-remove"><a href="#" class="remove-button"><span class="ion-ios-close"></span></a></td>
+
+                                        <td class="image-prod"><div class="img" style="background-image:url(images/blancaFlor.jpg);"></div></td>
+
+                                        <td class="product-name">
+                                            <h3>Blanca Flor 2</h3>
+                                            <p>Harina panadera</p>
+                                        </td>
+
+                                        <td class="price">S/7.99</td>
+
+                                        <td class="quantity">
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-btn mr-2">
+                                                    <button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
+                                                        <i class="ion-ios-remove" style="color: grey"></i>
+                                                    </button>
+                                                </span>
+                                                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="2" min="1" max="100">
+                                                <span class="input-group-btn ml-2">
+                                                    <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+                                                        <i class="ion-ios-add" style="color: grey"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="total"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -152,7 +181,7 @@
                             <h3>Total compra</h3>
                             <p class="d-flex">
                                 <span>Subtotal</span>
-                                <span>S/5.99</span>
+                                <span id="subtotal"></span>
                             </p>
                             <!--<p class="d-flex">
                                 <span>Delivery</span>
@@ -165,7 +194,7 @@
                             <hr>
                             <p class="d-flex total-price">
                                 <span>Total</span>
-                                <span>S/5.99</span>
+                                <span id="total"></span>
                             </p>
                         </div>
                         <p><a href="caja" class="btn btn-primary py-3 px-4">Proceder a pagar</a></p>
@@ -252,40 +281,84 @@
         <script src="js/main.js"></script>
 
         <script>
-                                $(document).ready(function () {
+            /*$(document).ready(function () {
 
-                                    var quantitiy = 0;
-                                    $('.quantity-right-plus').click(function (e) {
+                var quantitiy = 0;
+                $('.quantity-right-plus').click(function (e) {
 
-                                        // Stop acting like a button
-                                        e.preventDefault();
-                                        // Get the field name
-                                        var quantity = parseInt($('#quantity').val());
+                    // Stop acting like a button
+                    e.preventDefault();
+                    // Get the field name
+                    var quantity = parseInt($('#quantity').val());
 
-                                        // If is not undefined
+                    // If is not undefined
 
-                                        $('#quantity').val(quantity + 1);
+                    $('#quantity').val(quantity + 1);
 
 
-                                        // Increment
+                    // Increment
 
-                                    });
+                });
 
-                                    $('.quantity-left-minus').click(function (e) {
-                                        // Stop acting like a button
-                                        e.preventDefault();
-                                        // Get the field name
-                                        var quantity = parseInt($('#quantity').val());
+                $('.quantity-left-minus').click(function (e) {
+                    // Stop acting like a button
+                    e.preventDefault();
+                    // Get the field name
+                    var quantity = parseInt($('#quantity').val());
 
-                                        // If is not undefined
+                    // If is not undefined
 
-                                        // Increment
-                                        if (quantity > 0) {
-                                            $('#quantity').val(quantity - 1);
-                                        }
-                                    });
+                    // Increment
+                    if (quantity > 0) {
+                        $('#quantity').val(quantity - 1);
+                    }
+                });
 
-                                });
+            });*/
+            
+            var removeButtons = Array.from(document.getElementsByClassName('remove-button'))
+            removeButtons.forEach(function(element){
+                element.addEventListener('click',function(event){
+                    element.parentElement.parentElement.remove()
+                    updateTotal();
+                })
+            })
+            var quantityProducts = Array.from(document.getElementsByClassName('quantity-left-minus'))
+            quantityProducts.forEach(function(element){
+                element.addEventListener('click',function(){
+                    var quantity = parseInt(element.parentElement.parentElement.getElementsByClassName('input-number')[0].value)
+                    if(quantity>1){
+                        console.log('es mayor o igual a 1')
+                        quantity=quantity-1
+                    }else{
+                        console.log('no')
+                    }
+                    
+                    element.parentElement.parentElement.getElementsByClassName('input-number')[0].value = quantity
+                    updateTotal()
+                })
+            })
+            function updateTotal(){
+                var productItems = Array.from(document.getElementsByClassName('product-item'));
+                var total = 0;
+                productItems.forEach(function(element){
+                    var price = parseFloat(element.getElementsByClassName('price')[0].innerHTML.replace('S/',''));
+                    //console.log(price)
+                    var quantity = parseFloat(element.getElementsByClassName('input-number')[0].value);
+                    //console.log(quantity)
+                    element.getElementsByClassName('total')[0].innerHTML='S/'+price*quantity
+                    var priceTotal = parseFloat(element.getElementsByClassName('total')[0].innerHTML.replace('S/',''));
+                    total+=priceTotal;
+                })
+                var subtotal = document.getElementById('subtotal');
+                //console.log(subtotal.innerHTML)
+                var totalPrice = document.getElementById('total');
+                subtotal.innerHTML='S/'+total;
+                totalPrice.innerHTML='S/'+total;
+                
+            }
+            updateTotal()
+                                
         </script>
 
     </body>
