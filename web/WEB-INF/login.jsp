@@ -75,7 +75,7 @@
             </ul>
             <div class="container" style="width: 50%">
                 <div id="formulario1" style="display: block">
-                    <form>
+                    <form action="prueba">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ejemplo: amorales357@gmail.com" style="font-size: 14px">
@@ -91,7 +91,7 @@
                         <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                     </form>
                 </div>
-                <div id="formulario2" style="display: block">
+                <div id="formulario2" style="display: none">
                     <form class="needs-validation" novalidate>
                         <div class="form-row">
                             <div class="col-md-6 mb-2">
@@ -249,6 +249,30 @@
             })();
             
             
+            var login = document.getElementById('login');
+            var register = document.getElementById('register');
+            if(login){
+                login.addEventListener('click',function(e){
+                    if(login.classList.contains('activo'))  return
+                    
+                    register.classList.remove('activo')
+                    login.classList.add('activo');
+                    document.getElementById('formulario1').style.display='block';
+                    document.getElementById('formulario2').style.display='none';
+                    
+                })
+            }
+            if(register){
+                register.addEventListener('click',function(e){
+                    if(register.classList.contains('activo'))  return
+                    
+                    login.classList.remove('activo')
+                    register.classList.add('activo');
+                    document.getElementById('formulario2').style.display='block';
+                    document.getElementById('formulario1').style.display='none';
+                    
+                })
+            }
         </script>
     </body>
 </html>
