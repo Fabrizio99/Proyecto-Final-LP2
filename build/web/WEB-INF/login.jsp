@@ -1,11 +1,10 @@
 <%-- 
-    Document   : Nosotros
-    Created on : 19/11/2019, 03:43:14 PM
+    Document   : login
+    Created on : 23/11/2019, 10:17:58 PM
     Author     : fabri
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,124 +61,108 @@
                     <span class="oi oi-menu"></span> Menu
                 </button>
 
-                <div class="collapse navbar-collapse" id="ftco-nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="#" class="nav-link">Inicio</a></li>
-                        <li class="nav-item"><a href="about.html" class="nav-link"></a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="todosProductos" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="insumos">Insumos</a>
-                                <a class="dropdown-item" href="decoraciones">Decoraciones</a>
-                                <a class="dropdown-item" href="accesorios">Accesorios</a>
-                                <a class="dropdown-item" href="chocolateria">Chocolateria</a>
-                            </div>
-                        </li>
-                        <li class="nav-item active"><a href="nosotros" class="nav-link">Nosotros</a></li>
-                        <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
-                        <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
 
-                    </ul>
-                </div>
             </div>
         </nav>
+        <div class="login-container">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active activo" href="#" id="login">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="register">Crear Cuenta</a>
+                </li>
+            </ul>
+            <div class="container" style="width: 50%">
+                <div id="formulario1" style="display: block">
+                    <form action="prueba">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ejemplo: amorales357@gmail.com" style="font-size: 14px">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Contraseña</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" style="font-size: 14px">
+                        </div>
+                        <!--<div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>-->
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    </form>
+                </div>
+                <div id="formulario2" style="display: none">
+                    <form class="needs-validation" novalidate>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-2">
+                                <label for="validationCustom01">Nombres</label>
+                                <input type="text" class="form-control" id="validationCustom01" required placeholder="Ejemplo: Carlos" style="font-size: 14px">
+                                <div class="invalid-feedback">
+                                    Ingrese su nombre
+                                </div>
+                                <div class="valid-feedback">
+                                    Bien!
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label for="validationCustom02">Apellidos</label>
+                                <input type="text" class="form-control" id="validationCustom02" required placeholder="Ejemplo: López Martínez" style="font-size: 14px">
+                                <div class="invalid-feedback">
+                                    Ingrese su apellido
+                                </div>
+                                <div class="valid-feedback">
+                                    Bien!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-2">
+                                <label for="validationCustom01">Email</label>
+                                <input type="text" class="form-control" id="validationCustom01" required placeholder="Ej: carlos@gmail.com" style="font-size: 14px">
+                                <div class="invalid-feedback">
+                                    Ingrese un email
+                                </div>
+                                <div class="valid-feedback">
+                                    Bien!
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label for="validationCustom02">Contraseña</label>
+                                <input type="password" class="form-control" id="validationCustom02" required>
+                                <div class="invalid-feedback">
+                                    Ingrese su contraseña
+                                </div>
+                                <div class="valid-feedback">
+                                    Bien!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                <label class="form-check-label" for="invalidCheck">
+                                    Declaro que he leído y acepto los términos y condiciones de Kathiplass.
+                                </label>
+                                <div class="invalid-feedback">
+                                    Debes aceptar los términos y condiciones.
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Registrarse</button>
+                    </form>
 
-        <div class="hero-bread" style="background-color: white ;padding: 0.1px">
-            <div class="container">
-                <div class="row justify-content-center mb-3 pb-3">
-                    <div class="col-md-12 heading-section text-center ftco-animate">
-                        <h2 class="mb-4" style="font-size: 60px">Nosotros</h2>
-                    </div>
-                </div>  
+                </div>
             </div>
         </div>
-
-        <section class="ftco-section ftco-no-pb ftco-no-pt bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/Repostería1.jpg);">
-                        <!--<a href="https://vimeo.com/45830194" class="icon popup-vimeo d-flex justify-content-center align-items-center">
-                            <span class="icon-play"></span>
-                        </a>-->
-                    </div>
-                    <div class="col-md-7 py-5 wrap-about pb-md-5 ftco-animate">
-                        <div class="heading-section-bold mb-4 mt-md-5">
-                            <div class="ml-md-0">
-                                <h2 class="mb-4">Bienvenido a la tienda virtual de Kathiplass</h2>
-                            </div>
-                        </div>
-                        <div class="pb-md-5">
-                            <p>dsbsdhhjdsbjhfbdhfbdbhdfsbf.</p>
-                            <p>But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
-                            <p><a href="#" class="btn btn-primary">Compra ahora</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-        <section class="ftco-section bg-light">
-            <div class="container">
-                <div class="row no-gutters ftco-services">
-                    <div class="col-lg-3 text-center d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services mb-md-0 mb-4">
-                            <div class="icon bg-color-1 active d-flex justify-content-center align-items-center mb-2">
-                                <span class="flaticon-shipped"></span>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="heading">Envío Gratuito</h3>
-                                <span>Compras mayores a S/100</span>
-                            </div>
-                        </div>      
-                    </div>
-                    <div class="col-lg-3 text-center d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services mb-md-0 mb-4">
-                            <div class="icon bg-color-2 d-flex justify-content-center align-items-center mb-2">
-                                <span class="flaticon-diet"></span>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="heading">Siempre frescos</h3>
-                                <span>Productos bien empaquetados</span>
-                            </div>
-                        </div>    
-                    </div>
-                    <div class="col-lg-3 text-center d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services mb-md-0 mb-4">
-                            <div class="icon bg-color-3 d-flex justify-content-center align-items-center mb-2">
-                                <span class="flaticon-award"></span>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="heading">Calidad Superior</h3>
-                                <span>Productos de alta calidad</span>
-                            </div>
-                        </div>      
-                    </div>
-                    <div class="col-lg-3 text-center d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services mb-md-0 mb-4">
-                            <div class="icon bg-color-4 d-flex justify-content-center align-items-center mb-2">
-                                <span class="flaticon-customer-service"></span>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="heading">Atención al cliente</h3>
-                                <span>Atención 24/7</span>
-                            </div>
-                        </div>      
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <footer class="ftco-footer ftco-section">
             <div class="container">
-                <div class="row">
+                <!--<div class="row">
                     <div class="mouse">
                         <a href="#" class="mouse-icon">
                             <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
                         </a>
                     </div>
-                </div>
+                </div>-->
                 <div class="row mb-5">
                     <div class="col-md">
                         <div class="ftco-footer-widget mb-4">
@@ -227,7 +210,6 @@
 
 
 
-        <!-- loader -->
         <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
@@ -244,9 +226,53 @@
         <script src="js/jquery.animateNumber.min.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/scrollax.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-        <script src="js/google-map.js"></script>
         <script src="js/main.js"></script>
-
+        <script src="js/main2.js"></script>
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict';
+                window.addEventListener('load', function () {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+            
+            
+            var login = document.getElementById('login');
+            var register = document.getElementById('register');
+            if(login){
+                login.addEventListener('click',function(e){
+                    if(login.classList.contains('activo'))  return
+                    
+                    register.classList.remove('activo')
+                    login.classList.add('activo');
+                    document.getElementById('formulario1').style.display='block';
+                    document.getElementById('formulario2').style.display='none';
+                    
+                })
+            }
+            if(register){
+                register.addEventListener('click',function(e){
+                    if(register.classList.contains('activo'))  return
+                    
+                    login.classList.remove('activo')
+                    register.classList.add('activo');
+                    document.getElementById('formulario2').style.display='block';
+                    document.getElementById('formulario1').style.display='none';
+                    
+                })
+            }
+        </script>
     </body>
 </html>

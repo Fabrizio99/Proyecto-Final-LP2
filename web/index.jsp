@@ -63,7 +63,7 @@
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active"><a href="#" class="nav-link">Inicio</a></li>
+                        <li class="nav-item active"><a href="index.jsp" class="nav-link">Inicio</a></li>
                         <li class="nav-item"><a href="about.html" class="nav-link"></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="todosProductos" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
@@ -76,8 +76,9 @@
                         </li>
                         <li class="nav-item"><a href="nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
-                        <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-
+                        <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                        
                     </ul>
                 </div>
             </div>
@@ -163,11 +164,11 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-3 ftco-animate">
                         <div class="product">
-                            <a href="#" class="img-prod"><img class="img-fluid" src="images/blancaFlor.jpg" alt="Colorlib Template">
+                            <a href="producto" class="img-prod"><img class="img-fluid" src="images/blancaFlor.jpg" alt="Colorlib Template">
                                 <div class="overlay"></div>
                             </a>
                             <div class="text py-3 pb-4 px-3 text-center">
-                                <h3><a href="#">Blanca Flor</a></h3>
+                                <h3><a href="producto">Blanca Flor</a></h3>
                                 <p>Harina panadera</p>
                                 <div class="d-flex">
                                     <div class="pricing">
@@ -176,7 +177,7 @@
                                 </div>
                                 <div class="bottom-area d-flex px-3">
                                     <div class="m-auto d-flex">
-                                        <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                        <a href="producto" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                                             <span><i class="ion-ios-menu"></i></span>
                                         </a>
                                         <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
