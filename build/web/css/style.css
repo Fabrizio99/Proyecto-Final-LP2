@@ -56,6 +56,10 @@ body {
 [tabindex="-1"]:focus {
   outline: 0 !important; }
 
+.activo{
+    border-bottom: 2px solid #F08080;
+    color: #F08080
+}
 hr {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
@@ -8005,10 +8009,10 @@ a {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
-  color: #82ae46; }
+  color: grey; }
   a:hover, a:focus {
     text-decoration: none;
-    color: #82ae46; }
+    color: #F08080; }
 
 h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
@@ -8540,12 +8544,12 @@ h1, h2, h3, h4, h5,
         background: #82ae46;
         color: #fff; }
   .btn.btn-black {
-    background: #000000;
-    border: 1px solid #000000;
+    background: #696969;
+    border: 1px solid #696969;
     color: #fff; }
     .btn.btn-black:hover {
-      background: #82ae46;
-      border: 1px solid #82ae46;
+      background: #F08080;
+      border: 1px solid #F08080;
       color: #fff; }
     .btn.btn-black.btn-outline-white {
       border: 1px solid #000000;
@@ -8937,8 +8941,8 @@ h1, h2, h3, h4, h5,
       padding: 4px 10px;
       color: #000000; }
       .table tbody tr td.product-remove a:hover {
-        border: 1px solid #82ae46;
-        background: #82ae46; }
+        border: 1px solid #F08080;
+        background: #F08080; }
         .table tbody tr td.product-remove a:hover span {
           color: #fff; }
     .table tbody tr td.quantity {

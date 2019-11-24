@@ -63,7 +63,7 @@
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="#" class="nav-link">Inicio</a></li>
+                        <li class="nav-item"><a href="index.jsp" class="nav-link">Inicio</a></li>
                         <li class="nav-item"><a href="about.html" class="nav-link"></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="todosProductos" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
@@ -101,11 +101,11 @@
                             <table class="table">
                                 <thead class="thead-primary">
                                     <tr class="text-center">
+                                        <th>&nbsp</th>
                                         <th>&nbsp;</th>
-                                        <th>&nbsp;</th>
-                                        <th>Product name</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
+                                        <th>Nombre del producto</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -113,73 +113,62 @@
                                     <tr class="text-center">
                                         <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
 
-                                        <td class="image-prod"><div class="img" style="background-image:url(images/product-3.jpg);"></div></td>
+                                        <td class="image-prod"><div class="img" style="background-image:url(images/blancaFlor.jpg);"></div></td>
 
                                         <td class="product-name">
-                                            <h3>Bell Pepper</h3>
-                                            <p>Far far away, behind the word mountains, far from the countries</p>
+                                            <h3>Blanca Flor</h3>
+                                            <p>Harina panadera</p>
                                         </td>
 
-                                        <td class="price">$4.90</td>
+                                        <td class="price">S/5.99</td>
 
                                         <td class="quantity">
                                             <div class="input-group mb-3">
-                                                <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+                                                <span class="input-group-btn mr-2">
+                                                    <button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
+                                                        <i class="ion-ios-remove" style="color: grey"></i>
+                                                    </button>
+                                                </span>
+                                                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+                                                <span class="input-group-btn ml-2">
+                                                    <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+                                                        <i class="ion-ios-add" style="color: grey"></i>
+                                                    </button>
+                                                </span>
                                             </div>
                                         </td>
 
-                                        <td class="total">$4.90</td>
-                                    </tr><!-- END TR-->
-
-                                    <tr class="text-center">
-                                        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                        <td class="image-prod"><div class="img" style="background-image:url(images/product-4.jpg);"></div></td>
-
-                                        <td class="product-name">
-                                            <h3>Bell Pepper</h3>
-                                            <p>Far far away, behind the word mountains, far from the countries</p>
-                                        </td>
-
-                                        <td class="price">$15.70</td>
-
-                                        <td class="quantity">
-                                            <div class="input-group mb-3">
-                                                <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                            </div>
-                                        </td>
-
-                                        <td class="total">$15.70</td>
-                                    </tr><!-- END TR-->
+                                        <td class="total">S/5.99</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-end">
-                    
+
                     <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
                         <div class="cart-total mb-3">
-                            <h3>Cart Totals</h3>
+                            <h3>Total compra</h3>
                             <p class="d-flex">
                                 <span>Subtotal</span>
-                                <span>$20.60</span>
+                                <span>S/5.99</span>
                             </p>
-                            <p class="d-flex">
+                            <!--<p class="d-flex">
                                 <span>Delivery</span>
                                 <span>$0.00</span>
-                            </p>
-                            <p class="d-flex">
+                            </p>-->
+                            <!--<p class="d-flex">
                                 <span>Discount</span>
                                 <span>$3.00</span>
-                            </p>
+                            </p>-->
                             <hr>
                             <p class="d-flex total-price">
                                 <span>Total</span>
-                                <span>$17.60</span>
+                                <span>S/5.99</span>
                             </p>
                         </div>
-                        <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+                        <p><a href="caja" class="btn btn-primary py-3 px-4">Proceder a pagar</a></p>
                     </div>
                 </div>
             </div>
@@ -197,8 +186,8 @@
                 <div class="row mb-5">
                     <div class="col-md">
                         <div class="ftco-footer-widget mb-4">
-                            <h2 class="ftco-heading-2">Vegefoods</h2>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                            <h2 class="ftco-heading-2">Kathiplass</h2>
+                            <p>Venta de productos de calidad y a un buen precio.</p>
                             <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                                 <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                                 <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -208,40 +197,21 @@
                     </div>
                     <div class="col-md">
                         <div class="ftco-footer-widget mb-4 ml-md-5">
-                            <h2 class="ftco-heading-2">Menu</h2>
+                            <h2 class="ftco-heading-2">Menú</h2>
                             <ul class="list-unstyled">
-                                <li><a href="#" class="py-2 d-block">Shop</a></li>
-                                <li><a href="#" class="py-2 d-block">About</a></li>
-                                <li><a href="#" class="py-2 d-block">Journal</a></li>
-                                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                                <li><a href="#" class="py-2 d-block">Nosotros</a></li>
+                                <li><a href="#" class="py-2 d-block">Contáctanos</a></li>
                             </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="ftco-footer-widget mb-4">
-                            <h2 class="ftco-heading-2">Help</h2>
-                            <div class="d-flex">
-                                <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
-                                    <li><a href="#" class="py-2 d-block">Shipping Information</a></li>
-                                    <li><a href="#" class="py-2 d-block">Returns &amp; Exchange</a></li>
-                                    <li><a href="#" class="py-2 d-block">Terms &amp; Conditions</a></li>
-                                    <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
-                                </ul>
-                                <ul class="list-unstyled">
-                                    <li><a href="#" class="py-2 d-block">FAQs</a></li>
-                                    <li><a href="#" class="py-2 d-block">Contact</a></li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                     <div class="col-md">
                         <div class="ftco-footer-widget mb-4">
-                            <h2 class="ftco-heading-2">Have a Questions?</h2>
+                            <h2 class="ftco-heading-2">¿Alguna consulta?</h2>
                             <div class="block-23 mb-3">
                                 <ul>
-                                    <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                                    <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                                    <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                                    <li><span class="icon icon-map-marker"></span><span class="text">Mercado Plaza Villa Sur, puesto A-29. Villa el Salvador</span></li>
+                                    <li><a href="#"><span class="icon icon-phone"></span><span class="text">+51 999 999 999</span></a></li>
+                                    <li><a href="#"><span class="icon icon-envelope"></span><span class="text">contactos@kathiplass.com</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -250,9 +220,8 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
 
-                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos los derechos reservados | Página web hecha por </i><a href="#" target="_blank" style="color: #F08080;">ANFAVA</a>
                         </p>
                     </div>
                 </div>
