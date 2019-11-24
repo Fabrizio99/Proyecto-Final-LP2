@@ -281,94 +281,58 @@
         <script src="js/main.js"></script>
 
         <script>
-                                /*$(document).ready(function () {
-                                 
-                                 var quantitiy = 0;
-                                 $('.quantity-right-plus').click(function (e) {
-                                 
-                                 // Stop acting like a button
-                                 e.preventDefault();
-                                 // Get the field name
-                                 var quantity = parseInt($('#quantity').val());
-                                 
-                                 // If is not undefined
-                                 
-                                 $('#quantity').val(quantity + 1);
-                                 
-                                 
-                                 // Increment
-                                 
-                                 });
-                                 
-                                 $('.quantity-left-minus').click(function (e) {
-                                 // Stop acting like a button
-                                 e.preventDefault();
-                                 // Get the field name
-                                 var quantity = parseInt($('#quantity').val());
-                                 
-                                 // If is not undefined
-                                 
-                                 // Increment
-                                 if (quantity > 0) {
-                                 $('#quantity').val(quantity - 1);
-                                 }
-                                 });
-                                 
-                                 });*/
+            var removeButtons = Array.from(document.getElementsByClassName('remove-button'))
+            removeButtons.forEach(function (element) {
+                element.addEventListener('click', function (event) {
+                    element.parentElement.parentElement.remove()
+                    updateTotal();
+                })
+            })
+            var quantityLeft = Array.from(document.getElementsByClassName('quantity-left-minus'))
+            quantityLeft.forEach(function (element) {
+                element.addEventListener('click', function () {
+                    var quantity = parseInt(element.parentElement.parentElement.getElementsByClassName('input-number')[0].value)
+                    if (quantity > 1) {
+                        console.log('es mayor o igual a 1')
+                        quantity = quantity - 1
+                    } else {
+                        console.log('no')
+                    }
 
-                                var removeButtons = Array.from(document.getElementsByClassName('remove-button'))
-                                removeButtons.forEach(function (element) {
-                                    element.addEventListener('click', function (event) {
-                                        element.parentElement.parentElement.remove()
-                                        updateTotal();
-                                    })
-                                })
-                                var quantityLeft = Array.from(document.getElementsByClassName('quantity-left-minus'))
-                                quantityLeft.forEach(function (element) {
-                                    element.addEventListener('click', function () {
-                                        var quantity = parseInt(element.parentElement.parentElement.getElementsByClassName('input-number')[0].value)
-                                        if (quantity > 1) {
-                                            console.log('es mayor o igual a 1')
-                                            quantity = quantity - 1
-                                        } else {
-                                            console.log('no')
-                                        }
+                    element.parentElement.parentElement.getElementsByClassName('input-number')[0].value = quantity
+                    updateTotal()
+                })
+            })
+            var quantityRight = Array.from(document.getElementsByClassName('quantity-right-plus'));
+            console.log(quantityRight)
+            quantityRight.forEach(function (element) {
+                element.addEventListener('click', function () {
+                    var quantity = parseInt(element.parentElement.parentElement.getElementsByClassName('input-number')[0].value)
+                    quantity = quantity + 1
+                    element.parentElement.parentElement.getElementsByClassName('input-number')[0].value = quantity
+                    updateTotal()
+                })
+            })
+            function updateTotal() {
+                var productItems = Array.from(document.getElementsByClassName('product-item'));
+                var total = 0;
+                productItems.forEach(function (element) {
+                    var price = parseFloat(element.getElementsByClassName('price')[0].innerHTML.replace('S/', ''));
+                    //console.log(price)
+                    var quantity = parseFloat(element.getElementsByClassName('input-number')[0].value);
+                    //console.log(quantity)
+                    element.getElementsByClassName('total')[0].innerHTML = 'S/' + price * quantity
+                    var priceTotal = parseFloat(element.getElementsByClassName('total')[0].innerHTML.replace('S/', ''));
+                    total += priceTotal;
+                })
+                var subtotal = document.getElementById('subtotal');
+                //console.log(subtotal.innerHTML)
+                var totalPrice = document.getElementById('total');
+                subtotal.innerHTML = 'S/' + total;
+                totalPrice.innerHTML = 'S/' + total;
 
-                                        element.parentElement.parentElement.getElementsByClassName('input-number')[0].value = quantity
-                                        updateTotal()
-                                    })
-                                })
-                                var quantityRight = Array.from(document.getElementsByClassName('quantity-right-plus'));
-                                console.log(quantityRight)
-                                quantityRight.forEach(function (element) {
-                                    element.addEventListener('click', function () {
-                                        var quantity = parseInt(element.parentElement.parentElement.getElementsByClassName('input-number')[0].value)
-                                        quantity = quantity + 1
-                                        element.parentElement.parentElement.getElementsByClassName('input-number')[0].value = quantity
-                                        updateTotal()
-                                    })
-                                })
-                                function updateTotal() {
-                                    var productItems = Array.from(document.getElementsByClassName('product-item'));
-                                    var total = 0;
-                                    productItems.forEach(function (element) {
-                                        var price = parseFloat(element.getElementsByClassName('price')[0].innerHTML.replace('S/', ''));
-                                        //console.log(price)
-                                        var quantity = parseFloat(element.getElementsByClassName('input-number')[0].value);
-                                        //console.log(quantity)
-                                        element.getElementsByClassName('total')[0].innerHTML = 'S/' + price * quantity
-                                        var priceTotal = parseFloat(element.getElementsByClassName('total')[0].innerHTML.replace('S/', ''));
-                                        total += priceTotal;
-                                    })
-                                    var subtotal = document.getElementById('subtotal');
-                                    //console.log(subtotal.innerHTML)
-                                    var totalPrice = document.getElementById('total');
-                                    subtotal.innerHTML = 'S/' + total;
-                                    totalPrice.innerHTML = 'S/' + total;
-
-                                }
-                                updateTotal()
-
+            }
+            updateTotal()
         </script>
 
     </body>
