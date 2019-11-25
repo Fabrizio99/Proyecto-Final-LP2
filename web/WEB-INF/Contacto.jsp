@@ -4,10 +4,16 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.dao.CategoriaDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Modelo.bean.Categoria"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <%
+            ArrayList<Categoria> listadoCategorias = CategoriaDAO.listarProducto();
+        %>
         <title>Kathiplass</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -68,17 +74,16 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="todosProductos" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="insumos">Insumos</a>
-                                <a class="dropdown-item" href="decoraciones">Decoraciones</a>
-                                <a class="dropdown-item" href="accesorios">Accesorios</a>
-                                <a class="dropdown-item" href="chocolateria">Chocolateria</a>
+                                <%for (Categoria item : listadoCategorias) {%>
+                                <a class="dropdown-item" href="categoria?id=<%=item.getIdCategoria()%>"><%=item.getNameCategoria()%></a>
+                                <%}%>
                             </div>
                         </li>
                         <li class="nav-item"><a href="nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
                         <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
                         <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-                        
+
                     </ul>
                 </div>
             </div>

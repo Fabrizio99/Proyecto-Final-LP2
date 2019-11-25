@@ -4,9 +4,19 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.dao.CategoriaDAO"%>
+<%@page import="Modelo.bean.Producto"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Modelo.bean.Categoria"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+    <%
+        Categoria cat = (Categoria) request.getAttribute("categoria");
+        
+        ArrayList<Categoria> listadoCategorias = CategoriaDAO.listarProducto();
+        ArrayList<Producto> listadoProductos = (ArrayList<Producto>) request.getAttribute("listadoProductos");
+    %>
     <head>
         <title>Kathiplass</title>
         <meta charset="utf-8">
@@ -68,17 +78,16 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="todosProductos" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="insumos">Insumos</a>
-                                <a class="dropdown-item" href="decoraciones">Decoraciones</a>
-                                <a class="dropdown-item" href="accesorios">Accesorios</a>
-                                <a class="dropdown-item" href="chocolateria">Chocolateria</a>
+                                <%for (Categoria item : listadoCategorias) {%>
+                                <a class="dropdown-item" href="categoria?id=<%=item.getIdCategoria()%>"><%=item.getNameCategoria()%></a>
+                                <%}%>
                             </div>
                         </li>
                         <li class="nav-item"><a href="nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
                         <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
                         <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-                        
+
                     </ul>
                 </div>
             </div>
@@ -87,41 +96,40 @@
             <div class="container">
                 <div class="row justify-content-center mb-3 pb-3">
                     <div class="col-md-12 heading-section text-center ftco-animate">
-                        <h2 class="mb-4">Accesorios</h2>
+                        <h2 class="mb-4"><%=cat.getNameCategoria()%></h2>
                     </div>
                 </div>   		
             </div>
             <div class="container">
                 <div class="row">
+                    <%for(Producto prod:listadoProductos){%>
                     <div class="col-md-6 col-lg-3 ftco-animate">
                         <div class="product">
-                            <a href="#" class="img-prod"><img class="img-fluid" src="images/blancaFlor.jpg" alt="Colorlib Template">
+                            <a href="producto" class="img-prod"><img class="img-fluid" src="<%=prod.getImg_producto()%>" alt="Colorlib Template">
                                 <div class="overlay"></div>
                             </a>
                             <div class="text py-3 pb-4 px-3 text-center">
-                                <h3><a href="#">Blanca Flor</a></h3>
-                                <p>Harina panadera</p>
+                                <h3><a href="producto"><%=prod.getNomb_producto()%></a></h3>
+                                <p><%=prod.getCarac_producto()%></p>
                                 <div class="d-flex">
                                     <div class="pricing">
-                                        <p class="price"><span>S/5.99</span></p>
+                                        <p class="price"><span>S/<%=prod.getPrecio_producto()%></span></p>
                                     </div>
                                 </div>
                                 <div class="bottom-area d-flex px-3">
                                     <div class="m-auto d-flex">
-                                        <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                        <a href="producto" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                                             <span><i class="ion-ios-menu"></i></span>
                                         </a>
                                         <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
                                             <span><i class="ion-ios-cart"></i></span>
-                                        </a>
-                                        <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                            <span><i class="ion-ios-heart"></i></span>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <%}%>
                 </div>
             </div>
         </section>

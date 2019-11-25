@@ -5,6 +5,8 @@
  */
 package Controlador;
 
+import Modelo.bean.Usuario;
+import Modelo.dao.UsuarioDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabri
  */
-@WebServlet(name = "ServletPrincipal", urlPatterns = {"/ServletPrincipal","/nosotros","/contacto","/carroCompras","/caja","/producto","/login"})
+@WebServlet(name = "ServletPrincipal", urlPatterns = {"/ServletPrincipal","/nosotros","/contacto","/carroCompras","/caja","/producto","/login","/inicioSesion","/registro"})
 public class ServletPrincipal extends HttpServlet {
 
     /**
@@ -49,6 +51,31 @@ public class ServletPrincipal extends HttpServlet {
         }
         if(request.getServletPath().equals("/login")){
             request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+        }
+        if(request.getServletPath().equals("/inicioSesion")){
+            String user = request.getParameter("user");
+            String password = request.getParameter("password");
+            Usuario usuario = UsuarioDAO.datosUsuario(user, password);
+            if(usuario==null){
+                request.setAttribute("mensaje", "El usuario y/o contraseña no existen");
+                request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+            }else{
+                request.getSession().setAttribute("usuario", usuario);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        }
+        if(request.getServletPath().equals("/registro")){
+            String nombre = request.getParameter("nombre");
+            String apellido = request.getParameter("apellido");
+            String usuario = request.getParameter("usuario");
+            String contraseña = request.getParameter("contraseña");
+            Usuario user = new Usuario();
+            user.setNomb_usuario(nombre);
+            user.setApe_usuario(apellido);
+            user.setUsuario(usuario);
+            user.setContraseña(contraseña);
+            UsuarioDAO.registrarUsuario(user);
+            request.getSession().setAttribute("usuario", UsuarioDAO.datosUsuario(user.getUsuario(),user.getContraseña()));
         }
     }
 

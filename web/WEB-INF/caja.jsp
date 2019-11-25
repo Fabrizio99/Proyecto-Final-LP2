@@ -194,7 +194,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" id="paypal">
                                 <div class="cart-detail p-3 p-md-4">
                                     <h3 class="billing-heading mb-4">Método de Pago</h3>
                                     <div class="form-group">
@@ -302,6 +302,8 @@
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
             <script src="js/google-map.js"></script>
             <script src="js/main.js"></script>
+            <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+            <script>paypal.Buttons().render('body');</script>
 
             <script>
                                     $(document).ready(function () {
@@ -339,6 +341,7 @@
 
                                     });
             </script>
-
+            <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+            <script>paypal.Buttons().render('body');</script>
     </body>
 </html>

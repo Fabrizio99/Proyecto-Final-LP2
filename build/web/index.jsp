@@ -4,10 +4,19 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.bean.Producto"%>
+<%@page import="Modelo.dao.ProductoDAO"%>
+<%@page import="Modelo.dao.CategoriaDAO"%>
+<%@page import="Modelo.bean.Categoria"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <%
+            ArrayList<Categoria> listadoCategorias = CategoriaDAO.listarProducto();
+            ArrayList<Producto> listadoProductos = ProductoDAO.listarProducto();
+        %>
         <title>Kathiplass</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -68,17 +77,16 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="todosProductos" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="insumos">Insumos</a>
-                                <a class="dropdown-item" href="decoraciones">Decoraciones</a>
-                                <a class="dropdown-item" href="accesorios">Accesorios</a>
-                                <a class="dropdown-item" href="chocolateria">Chocolateria</a>
+                                <%for (Categoria item : listadoCategorias) {%>
+                                <a class="dropdown-item" href="categoria?id=<%=item.getIdCategoria()%>"><%=item.getNameCategoria()%></a>
+                                <%}%>
                             </div>
                         </li>
                         <li class="nav-item"><a href="nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
                         <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
                         <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-                        
+
                     </ul>
                 </div>
             </div>
@@ -162,17 +170,18 @@
             </div>
             <div class="container">
                 <div class="row">
+                    <%for(int i=0;i<4;i++){%>
                     <div class="col-md-6 col-lg-3 ftco-animate">
                         <div class="product">
-                            <a href="producto" class="img-prod"><img class="img-fluid" src="images/blancaFlor.jpg" alt="Colorlib Template">
+                            <a href="producto" class="img-prod"><img class="img-fluid" src="images/<%=listadoProductos.get(i).getImg_producto()%>.jpg" alt="Colorlib Template">
                                 <div class="overlay"></div>
                             </a>
                             <div class="text py-3 pb-4 px-3 text-center">
-                                <h3><a href="producto">Blanca Flor</a></h3>
-                                <p>Harina panadera</p>
+                                <h3><a href="producto"><%=listadoProductos.get(i).getNomb_producto()%></a></h3>
+                                <p><%=listadoProductos.get(i).getCarac_producto()%></p>
                                 <div class="d-flex">
                                     <div class="pricing">
-                                        <p class="price"><span>S/5.99</span></p>
+                                        <p class="price"><span>S/<%=listadoProductos.get(i).getPrecio_producto()%></span></p>
                                     </div>
                                 </div>
                                 <div class="bottom-area d-flex px-3">
@@ -183,14 +192,12 @@
                                         <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
                                             <span><i class="ion-ios-cart"></i></span>
                                         </a>
-                                        <!--<a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                            <span><i class="ion-ios-heart"></i></span>
-                                        </a>-->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <%}%>
                 </div>
         </section>
         <section class="ftco-section ftco-category ftco-no-pt">
@@ -203,35 +210,29 @@
                                     <div class="text text-center" style="margin-bottom: 400px;">
                                         <h2>Categorías</h2>
                                         <p>Nuestros productos se encuentran en estas categorías</p>
-                                        <!--<p><a href="#" class="btn btn-primary">Ver todos</a></p>-->
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/insumos.jpg);">
+
+                                <%for (int i = 0; i < listadoCategorias.size() / 2; i++) {%>
+                                <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/<%=listadoCategorias.get(i).getFotoCategoria()%>);">
                                     <div class="text px-3 py-1">
-                                        <h2 class="mb-0"><a href="insumos">Insumos</a></h2>
+                                        <h2 class="mb-0"><a href="categoria?id=<%=listadoCategorias.get(i).getIdCategoria()%>"><%=listadoCategorias.get(i).getNameCategoria()%></a></h2>
                                     </div>
                                 </div>
-                                <div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/accesorios.jpg);">
-                                    <div class="text px-3 py-1">
-                                        <h2 class="mb-0"><a href="accesorios">Accesorios</a></h2>
-                                    </div>
-                                </div>
+                                <%}%>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/decoracion.jpg);">
+                        <%for (int i =listadoCategorias.size() / 2 ; i < listadoCategorias.size(); i++) {%>
+                        <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/<%=listadoCategorias.get(i).getFotoCategoria()%>);">
                             <div class="text px-3 py-1">
-                                <h2 class="mb-0"><a href="decoraciones">Decoraciones</a></h2>
-                            </div>		
-                        </div>
-                        <div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/chocolateria.jpg);">
-                            <div class="text px-3 py-1">
-                                <h2 class="mb-0"><a href="chocolateria">Chocolateria</a></h2>
+                                <h2 class="mb-0"><a href="categoria?id=<%=listadoCategorias.get(i).getIdCategoria()%>"><%=listadoCategorias.get(i).getNameCategoria()%></a></h2>
                             </div>
                         </div>
+                        <%}%>
                     </div>
                 </div>
             </div>

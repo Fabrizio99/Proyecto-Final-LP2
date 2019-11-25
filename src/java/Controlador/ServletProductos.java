@@ -5,8 +5,13 @@
  */
 package Controlador;
 
+import Modelo.bean.Categoria;
+import Modelo.bean.Producto;
+import Modelo.dao.CategoriaDAO;
+import Modelo.dao.ProductoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabri
  */
-@WebServlet(name = "ServletProductos", urlPatterns = {"/ServletProductos","/todosProductos","/insumos","/accesorios","/decoraciones","/chocolateria"})
+@WebServlet(name = "ServletProductos", urlPatterns = {"/ServletProductos","/todosProductos","/categoria"})
 public class ServletProductos extends HttpServlet {
 
     /**
@@ -35,18 +40,16 @@ public class ServletProductos extends HttpServlet {
         if(request.getServletPath().equals("/todosProductos")){
             request.getRequestDispatcher("WEB-INF/TodosProductos.jsp").forward(request, response);
         }
-        if(request.getServletPath().equals("/insumos")){
-            request.getRequestDispatcher("WEB-INF/Insumos.jsp").forward(request, response);
+        if(request.getServletPath().equals("/categoria")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            ArrayList<Producto> listadoProductos = ProductoDAO.listarProductoIdCategoria(id);
+            Categoria cat = CategoriaDAO.datosCategoria(id);
+            System.out.println("fdgfdgfdfdg"+listadoProductos);
+            request.setAttribute("categoria", cat);
+            request.setAttribute("listadoProductos", listadoProductos);
+            request.getRequestDispatcher("WEB-INF/CategoriaProductos.jsp").forward(request, response);
         }
-        if(request.getServletPath().equals("/chocolateria")){
-            request.getRequestDispatcher("WEB-INF/Chocolateria.jsp").forward(request, response);
-        }
-        if(request.getServletPath().equals("/accesorios")){
-            request.getRequestDispatcher("WEB-INF/Accesorios.jsp").forward(request, response);
-        }
-        if(request.getServletPath().equals("/decoraciones")){
-            request.getRequestDispatcher("WEB-INF/Decoraciones.jsp").forward(request, response);
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

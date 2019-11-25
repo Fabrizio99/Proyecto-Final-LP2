@@ -8,6 +8,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
         <title>Kathiplass</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -75,28 +78,30 @@
             </ul>
             <div class="container" style="width: 50%">
                 <div id="formulario1" style="display: block">
-                    <form action="prueba">
+                    <form action="inicioSesion" method="post">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ejemplo: amorales357@gmail.com" style="font-size: 14px">
+                            <label for="exampleInputEmail1">Usuario</label>
+                            <input name="user" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ejemplo: amorales357" style="font-size: 14px">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Contraseña</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" style="font-size: 14px">
+                            <input name="password" type="password" class="form-control" id="exampleInputPassword1" style="font-size: 14px">
                         </div>
-                        <!--<div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                        </div>-->
                         <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                     </form>
+                        <%if(mensaje!=null){%>
+                        <div class="alert alert-danger" role="alert">
+                            ${mensaje}
+                        </div>
+                        <%}%>
+                    
                 </div>
                 <div id="formulario2" style="display: none">
-                    <form class="needs-validation" novalidate>
+                    <form class="needs-validation" novalidate action="registro" method="post">
                         <div class="form-row">
                             <div class="col-md-6 mb-2">
                                 <label for="validationCustom01">Nombres</label>
-                                <input type="text" class="form-control" id="validationCustom01" required placeholder="Ejemplo: Carlos" style="font-size: 14px">
+                                <input name="nombre" type="text" class="form-control" id="validationCustom01" required placeholder="Ejemplo: Carlos" style="font-size: 14px">
                                 <div class="invalid-feedback">
                                     Ingrese su nombre
                                 </div>
@@ -106,7 +111,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="validationCustom02">Apellidos</label>
-                                <input type="text" class="form-control" id="validationCustom02" required placeholder="Ejemplo: López Martínez" style="font-size: 14px">
+                                <input name="apellido" type="text" class="form-control" id="validationCustom02" required placeholder="Ejemplo: López Martínez" style="font-size: 14px">
                                 <div class="invalid-feedback">
                                     Ingrese su apellido
                                 </div>
@@ -117,10 +122,10 @@
                         </div>
                         <div class="form-row">
                             <div class="col-md-6 mb-2">
-                                <label for="validationCustom01">Email</label>
-                                <input type="text" class="form-control" id="validationCustom01" required placeholder="Ej: carlos@gmail.com" style="font-size: 14px">
+                                <label for="validationCustom01">Usuario</label>
+                                <input name="usuario" type="text" class="form-control" id="validationCustom01" required placeholder="Ej: carlos@gmail.com" style="font-size: 14px">
                                 <div class="invalid-feedback">
-                                    Ingrese un email
+                                    Ingrese su usuario
                                 </div>
                                 <div class="valid-feedback">
                                     Bien!
@@ -128,7 +133,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="validationCustom02">Contraseña</label>
-                                <input type="password" class="form-control" id="validationCustom02" required>
+                                <input name="contraseña" type="password" class="form-control" id="validationCustom02" required>
                                 <div class="invalid-feedback">
                                     Ingrese su contraseña
                                 </div>
@@ -229,50 +234,52 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script>
-            // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (function () {
-                'use strict';
-                window.addEventListener('load', function () {
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.getElementsByClassName('needs-validation');
-                    // Loop over them and prevent submission
-                    var validation = Array.prototype.filter.call(forms, function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (form.checkValidity() === false) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                            form.classList.add('was-validated');
-                        }, false);
-                    });
-                }, false);
-            })();
-            
-            
-            var login = document.getElementById('login');
-            var register = document.getElementById('register');
-            if(login){
-                login.addEventListener('click',function(e){
-                    if(login.classList.contains('activo'))  return
-                    
-                    register.classList.remove('activo')
-                    login.classList.add('activo');
-                    document.getElementById('formulario1').style.display='block';
-                    document.getElementById('formulario2').style.display='none';
-                    
-                })
-            }
-            if(register){
-                register.addEventListener('click',function(e){
-                    if(register.classList.contains('activo'))  return
-                    
-                    login.classList.remove('activo')
-                    register.classList.add('activo');
-                    document.getElementById('formulario2').style.display='block';
-                    document.getElementById('formulario1').style.display='none';
-                    
-                })
-            }
+                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                (function () {
+                                    'use strict';
+                                    window.addEventListener('load', function () {
+                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                        var forms = document.getElementsByClassName('needs-validation');
+                                        // Loop over them and prevent submission
+                                        var validation = Array.prototype.filter.call(forms, function (form) {
+                                            form.addEventListener('submit', function (event) {
+                                                if (form.checkValidity() === false) {
+                                                    event.preventDefault();
+                                                    event.stopPropagation();
+                                                }
+                                                form.classList.add('was-validated');
+                                            }, false);
+                                        });
+                                    }, false);
+                                })();
+
+
+                                var login = document.getElementById('login');
+                                var register = document.getElementById('register');
+                                if (login) {
+                                    login.addEventListener('click', function (e) {
+                                        if (login.classList.contains('activo'))
+                                            return
+
+                                        register.classList.remove('activo')
+                                        login.classList.add('activo');
+                                        document.getElementById('formulario1').style.display = 'block';
+                                        document.getElementById('formulario2').style.display = 'none';
+
+                                    })
+                                }
+                                if (register) {
+                                    register.addEventListener('click', function (e) {
+                                        if (register.classList.contains('activo'))
+                                            return
+
+                                        login.classList.remove('activo')
+                                        register.classList.add('activo');
+                                        document.getElementById('formulario2').style.display = 'block';
+                                        document.getElementById('formulario1').style.display = 'none';
+
+                                    })
+                                }
         </script>
     </body>
 </html>

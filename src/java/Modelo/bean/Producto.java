@@ -16,6 +16,16 @@ public class Producto {
     public String nomb_producto;
     public Double precio_producto;
     public String img_producto;
+    public String carac_producto;
+
+    public String getCarac_producto() {
+        return carac_producto;
+    }
+
+    public void setCarac_producto(String carac_producto) {
+        this.carac_producto = carac_producto;
+    }
+    
 
     public int getId_producto() {
         return id_producto;
