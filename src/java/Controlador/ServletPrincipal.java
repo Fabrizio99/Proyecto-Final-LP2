@@ -68,7 +68,8 @@ public class ServletPrincipal extends HttpServlet {
             String nombre = request.getParameter("nombre");
             String apellido = request.getParameter("apellido");
             String usuario = request.getParameter("usuario");
-            String contraseña = request.getParameter("contraseña");
+            String contraseña = request.getParameter("contra");
+            System.out.println("CONTRASEÑA"+contraseña);
             Usuario user = new Usuario();
             user.setNomb_usuario(nombre);
             user.setApe_usuario(apellido);
@@ -76,6 +77,8 @@ public class ServletPrincipal extends HttpServlet {
             user.setContraseña(contraseña);
             UsuarioDAO.registrarUsuario(user);
             request.getSession().setAttribute("usuario", UsuarioDAO.datosUsuario(user.getUsuario(),user.getContraseña()));
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+            System.out.println(request.getSession().getAttribute("usuario"));
         }
     }
 

@@ -133,7 +133,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="validationCustom02">Contraseña</label>
-                                <input name="contraseña" type="password" class="form-control" id="validationCustom02" required>
+                                <input name="contra" type="password" class="form-control" id="validationCustom02" required>
                                 <div class="invalid-feedback">
                                     Ingrese su contraseña
                                 </div>
