@@ -97,7 +97,7 @@
                         <%}else{%>
                         <li class="nav-item"><a href="#" class="nav-link"><%=user.getNomb_usuario()%></a></li>
                         <%}%>
-                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter">0</spam>]</a></li>
                     </ul>
                 </div>
             </div>
@@ -200,7 +200,7 @@
                                         <a href="producto" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                                             <span><i class="ion-ios-menu"></i></span>
                                         </a>
-                                        <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                        <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" onclick="aumentarContador()">
                                             <span><i class="ion-ios-cart"></i></span>
                                         </a>
                                     </div>
@@ -343,6 +343,13 @@
         <script src="js/scrollax.min.js"></script>
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
+        <script>
+            function aumentarContador(){
+                var counter = parseInt(document.getElementById('counter').innerHTML);
+                counter=counter+1;
+                document.getElementById('counter').innerHTML=counter
+            }
+        </script>
         <script src="https://account.snatchbot.me/script.js"></script><script>window.sntchChat.Init(75396)</script> 
     </body>
 </html>
