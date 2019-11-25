@@ -200,7 +200,7 @@
                                         <a href="producto" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                                             <span><i class="ion-ios-menu"></i></span>
                                         </a>
-                                        <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" onclick="aumentarContador()">
+                                        <a href="controlador?idProducto=<%=listadoProductos.get(i).getId_producto()%>&cantidad=1" class="buy-now d-flex justify-content-center align-items-center mx-1" >
                                             <span><i class="ion-ios-cart"></i></span>
                                         </a>
                                     </div>

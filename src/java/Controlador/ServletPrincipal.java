@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabri
  */
-@WebServlet(name = "ServletPrincipal", urlPatterns = {"/ServletPrincipal","/nosotros","/contacto","/carroCompras","/caja","/producto","/login","/inicioSesion","/registro"})
+@WebServlet(name = "ServletPrincipal", urlPatterns = {"/ServletPrincipal","/nosotros","/contacto","/carroCompras","/caja","/producto","/login","/inicioSesion","/registro","/controlador"})
 public class ServletPrincipal extends HttpServlet {
 
     /**
@@ -79,6 +79,17 @@ public class ServletPrincipal extends HttpServlet {
             request.getSession().setAttribute("usuario", UsuarioDAO.datosUsuario(user.getUsuario(),user.getContraseña()));
             request.getRequestDispatcher("index.jsp").forward(request, response);
             System.out.println(request.getSession().getAttribute("usuario"));
+        }
+        if(request.getServletPath().equals("/controlador")){
+            Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+            if(user==null){
+                request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+            }else{
+                int idProducto = Integer.parseInt(request.getParameter("idProducto"));
+                int idUsuario = user.getId_usuario();
+                int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+                
+            }
         }
     }
 
