@@ -4,10 +4,14 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.bean.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <%
+            Producto datoProducto = (Producto) request.getAttribute("datosProducto");
+        %>
         <title>Kathiplass</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -97,44 +101,15 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 mb-5 ftco-animate">
-                        <a href="images/blancaFlor.jpg" class="image-popup"><img src="images/blancaFlor.jpg" class="img-fluid" alt="Colorlib Template"></a>
+                        <a href="<%=datoProducto.getImg_producto()%>" class="image-popup"><img src="<%=datoProducto.getImg_producto()%>" class="img-fluid" alt="Colorlib Template"></a>
                     </div>
                     <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-                        <h3>Blanca Flor</h3>
-                        <!--<div class="rating d-flex">
-                            <p class="text-left mr-4">
-                                <a href="#" class="mr-2">5.0</a>
-                                <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                <a href="#"><span class="ion-ios-star-outline"></span></a>
-                            </p>
-                            <p class="text-left mr-4">
-                                <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
-                            </p>
-                            <p class="text-left">
-                                <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-                            </p>
-                        </div>-->
-                        <p class="price"><span>S/5.99</span></p>
-                        <p>Harina Preparada.
+                        <h3><%=datoProducto.getNomb_producto()%></h3>
+                        
+                        <p class="price"><span>S/ <%=datoProducto.getPrecio_producto()%></span></p>
+                        <p><%=datoProducto.getDesc_producto()%>
                         </p>
                         <div class="row mt-4">
-                            <!--<div class="col-md-6">
-                                <div class="form-group d-flex">
-                                    <div class="select-wrap">
-                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                        <select name="" id="" class="form-control">
-                                            <option value="">Small</option>
-                                            <option value="">Medium</option>
-                                            <option value="">Large</option>
-                                            <option value="">Extra Large</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100"></div>-->
                             <div class="input-group col-md-6 d-flex mb-3">
                                 <span class="input-group-btn mr-2">
                                     <button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
@@ -150,7 +125,7 @@
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md-12">
-                                <p style="color: #000;">600 kg available</p>
+                                <p style="color: #000;"><%=datoProducto.getCarac_producto()%></p>
                             </div>
                         </div>
                         <p><a href="cart.html" class="btn btn-black py-3 px-5">Añadir al Carro</a></p>

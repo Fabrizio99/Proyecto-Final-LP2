@@ -65,7 +65,29 @@ public class ProductoDAO {
         } 
     }
      
-     
+    public static Producto productoSelect(int idProducto) {
+        String sql = "select * from producto where id_producto =?";
+        Producto prod = null;
+        Connection cn = Coneccion.coneccion.Abrir();
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, idProducto);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                prod = new Producto();
+                prod.setId_producto(rs.getInt("id_producto"));
+                prod.setId_categoria(rs.getInt("id_categoria"));
+                prod.setNomb_producto(rs.getString("nomb_producto"));
+                prod.setDesc_producto(rs.getString("desc_producto"));
+                prod.setPrecio_producto(rs.getDouble("precio_producto"));
+                prod.setImg_producto(rs.getString("img_producto"));
+                prod.setCarac_producto(rs.getString("caract_producto"));
+            }
+            return prod;
+        } catch (Exception e) {
+            return null;
+        }
+    }
     
     
     

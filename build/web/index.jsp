@@ -184,11 +184,11 @@
                     <%for(int i=0;i<4;i++){%>
                     <div class="col-md-6 col-lg-3 ftco-animate">
                         <div class="product">
-                            <a href="producto" class="img-prod"><img class="img-fluid" src="images/<%=listadoProductos.get(i).getImg_producto()%>.jpg" alt="Colorlib Template">
+                            <a href="producto?idProducto=<%=listadoProductos.get(i).getId_producto()%>" class="img-prod"><img class="img-fluid" src="<%=listadoProductos.get(i).getImg_producto()%>" alt="Colorlib Template">
                                 <div class="overlay"></div>
                             </a>
                             <div class="text py-3 pb-4 px-3 text-center">
-                                <h3><a href="producto"><%=listadoProductos.get(i).getNomb_producto()%></a></h3>
+                                <h3><a href="producto?idProducto=<%=listadoProductos.get(i).getId_producto()%>"><%=listadoProductos.get(i).getNomb_producto()%></a></h3>
                                 <p><%=listadoProductos.get(i).getCarac_producto()%></p>
                                 <div class="d-flex">
                                     <div class="pricing">
@@ -197,7 +197,7 @@
                                 </div>
                                 <div class="bottom-area d-flex px-3">
                                     <div class="m-auto d-flex">
-                                        <a href="producto" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                        <a href="producto?idProducto=<%=listadoProductos.get(i).getId_producto()%>" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                                             <span><i class="ion-ios-menu"></i></span>
                                         </a>
                                         <a href="controlador?idProducto=<%=listadoProductos.get(i).getId_producto()%>&cantidad=1" class="buy-now d-flex justify-content-center align-items-center mx-1" >

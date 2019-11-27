@@ -14,7 +14,7 @@ import java.sql.DriverManager;
  */
 public class coneccion {
     
-    public static String url = "jdbc:mysql://localhost/prueba1";
+    public static String url = "jdbc:mysql://localhost/prueba2";
     public static String user = "root";
     public static String paswd = "";
     public static Connection cn;

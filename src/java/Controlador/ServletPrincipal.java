@@ -5,7 +5,9 @@
  */
 package Controlador;
 
+import Modelo.bean.Producto;
 import Modelo.bean.Usuario;
+import Modelo.dao.ProductoDAO;
 import Modelo.dao.UsuarioDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -47,6 +49,9 @@ public class ServletPrincipal extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/caja.jsp").forward(request, response);
         }
         if(request.getServletPath().equals("/producto")){
+            int idProducto = Integer.parseInt(request.getParameter("idProducto"));
+            Producto datosProducto = ProductoDAO.productoSelect(idProducto);
+            request.setAttribute("datosProducto", datosProducto);
             request.getRequestDispatcher("WEB-INF/Producto.jsp").forward(request, response);
         }
         if(request.getServletPath().equals("/login")){
@@ -91,6 +96,7 @@ public class ServletPrincipal extends HttpServlet {
                 
             }
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
