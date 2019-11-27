@@ -5,11 +5,15 @@
  */
 package Controlador;
 
+import Modelo.bean.Pedidos;
 import Modelo.bean.Producto;
 import Modelo.bean.Usuario;
+import Modelo.dao.PedidoDAO;
 import Modelo.dao.ProductoDAO;
 import Modelo.dao.UsuarioDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,6 +40,7 @@ public class ServletPrincipal extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         if(request.getServletPath().equals("/nosotros")){
             request.getRequestDispatcher("WEB-INF/Nosotros.jsp").forward(request, response);
         }
@@ -74,7 +79,6 @@ public class ServletPrincipal extends HttpServlet {
             String apellido = request.getParameter("apellido");
             String usuario = request.getParameter("usuario");
             String contraseña = request.getParameter("contra");
-            System.out.println("CONTRASEÑA"+contraseña);
             Usuario user = new Usuario();
             user.setNomb_usuario(nombre);
             user.setApe_usuario(apellido);
@@ -88,12 +92,28 @@ public class ServletPrincipal extends HttpServlet {
         if(request.getServletPath().equals("/controlador")){
             Usuario user = (Usuario) request.getSession().getAttribute("usuario");
             if(user==null){
-                request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+                out.println(1);
             }else{
                 int idProducto = Integer.parseInt(request.getParameter("idProducto"));
                 int idUsuario = user.getId_usuario();
-                int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+                int cantidadProducto = Integer.parseInt(request.getParameter("cantidadProducto"));
+                int id_pu = PedidoDAO.cantidadPedido(idUsuario);
+                boolean validador = PedidoDAO.validador(idProducto, idUsuario);
+                if(validador==true){
+                    out.println(2);
+                }else{
+                    PedidoDAO.insertarPedido1(idUsuario, idProducto, cantidadProducto);
+                PedidoDAO.insertarPedido2(idProducto, id_pu+1, cantidadProducto);
+                out.println("<spam>"+PedidoDAO.cantidadPedido(idUsuario)+"</spam>");
+                }                
                 
+                /*int idProducto = Integer.parseInt(request.getParameter("idProducto"));
+                int idUsuario = user.getId_usuario();
+                int cantidadProducto = Integer.parseInt(request.getParameter("cantidadProducto"));
+                int id_pu = PedidoDAO.cantidadPedido(idUsuario);
+                PedidoDAO.insertarPedido1(idUsuario, idProducto, cantidadProducto);
+                PedidoDAO.insertarPedido2(idProducto, id_pu+1, cantidadProducto);
+                out.println("<spam>"+PedidoDAO.cantidadPedido(idUsuario)+"</spam>");*/
             }
         }
         

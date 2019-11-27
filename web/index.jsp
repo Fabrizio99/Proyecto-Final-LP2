@@ -4,6 +4,7 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.dao.PedidoDAO"%>
 <%@page import="Modelo.bean.Usuario"%>
 <%@page import="Modelo.bean.Producto"%>
 <%@page import="Modelo.dao.ProductoDAO"%>
@@ -94,10 +95,12 @@
                         %>
                         <%if(user==null){%>
                         <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam>0</spam></spam>]</a></li>
                         <%}else{%>
                         <li class="nav-item"><a href="#" class="nav-link"><%=user.getNomb_usuario()%></a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam><%=PedidoDAO.cantidadPedido(user.getId_usuario())%></spam></spam>]</a></li>
                         <%}%>
-                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter">0</spam>]</a></li>
+                        
                     </ul>
                 </div>
             </div>
@@ -344,11 +347,37 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script>
-            function aumentarContador(){
-                var counter = parseInt(document.getElementById('counter').innerHTML);
-                counter=counter+1;
-                document.getElementById('counter').innerHTML=counter
-            }
+            $(document).ready(function(){
+                $('.buy-now').click(function(){
+                    var url = $(this).attr('href');
+                    var idProducto = getURLParameter(url,'idProducto');
+                    var cantidadProducto = getURLParameter(url,'cantidad');
+                    $.ajax({
+                        url:'controlador',
+                        data:{
+                            idProducto : idProducto,
+                            cantidadProducto : cantidadProducto
+                        },
+                        type: 'POST',
+                        success: function (response, textStatus, jqXHR) {
+                            if(response==1){
+                                window.location.href = 'login'
+                            }else if(response==2){
+                                window.location.href = 'carroCompras'
+                            }else{
+                                $('#counter').html(response);
+                            }
+                                
+                            
+                                
+                        }
+                    })
+                    return false;
+                })
+                function getURLParameter(url, name) {
+                    return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
+                }
+            })
         </script>
         <script src="https://account.snatchbot.me/script.js"></script><script>window.sntchChat.Init(75396)</script> 
     </body>

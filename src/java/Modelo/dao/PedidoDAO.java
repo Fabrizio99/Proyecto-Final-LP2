@@ -5,6 +5,7 @@
  */
 package Modelo.dao;
 
+import Modelo.bean.Pedidos;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -67,7 +68,7 @@ public class PedidoDAO {
     
     }
     
-    /*public static ArrayList<Pedidos> listarPedidosByUser(int idUser){
+    public static ArrayList<Pedidos> listarPedidosByUser(int idUser){
         String sql="SELECT pd.id_producto AS id,\n" +
                     "	pd.nomb_producto AS nom,\n" +
                     "    pd.caract_producto AS caract,\n" +
@@ -103,7 +104,7 @@ public class PedidoDAO {
             System.out.println("NO RETORNO NADA :::: " + e);
             return null;
         } 
-    }*/
+    }
      public static void editarCantidad(int cant, int id_p,int id_u){
         
         try {

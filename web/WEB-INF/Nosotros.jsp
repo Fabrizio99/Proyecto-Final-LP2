@@ -4,6 +4,7 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.bean.Usuario"%>
 <%@page import="Modelo.dao.CategoriaDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Modelo.bean.Categoria"%>
@@ -82,9 +83,15 @@
                         </li>
                         <li class="nav-item"><a href="nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
+                        <%
+                                Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+                        %>
+                        <%if(user==null){%>
                         <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
-                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-
+                        <%}else{%>
+                        <li class="nav-item"><a href="#" class="nav-link"><%=user.getNomb_usuario()%></a></li>
+                        <%}%>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter">0</spam>]</a></li>
                     </ul>
                 </div>
             </div>
@@ -117,7 +124,7 @@
                         <div class="pb-md-5">
                             <p>dsbsdhhjdsbjhfbdhfbdbhdfsbf.</p>
                             <p>But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
-                            <p><a href="#" class="btn btn-primary">Compra ahora</a></p>
+                            <p><a href="todosProductos" class="btn btn-primary">Compra ahora</a></p>
                         </div>
                     </div>
                 </div>

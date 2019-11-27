@@ -4,6 +4,11 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.dao.PedidoDAO"%>
+<%@page import="Modelo.bean.Usuario"%>
+<%@page import="Modelo.dao.CategoriaDAO"%>
+<%@page import="Modelo.bean.Categoria"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Modelo.bean.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,6 +16,7 @@
     <head>
         <%
             Producto datoProducto = (Producto) request.getAttribute("datosProducto");
+            ArrayList<Categoria> listadoCategorias = CategoriaDAO.listarProducto();
         %>
         <title>Kathiplass</title>
         <meta charset="utf-8">
@@ -72,16 +78,28 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="todosProductos" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="insumos">Insumos</a>
-                                <a class="dropdown-item" href="decoraciones">Decoraciones</a>
-                                <a class="dropdown-item" href="accesorios">Accesorios</a>
-                                <a class="dropdown-item" href="chocolateria">Chocolateria</a>
+                                <%for (Categoria item : listadoCategorias) {%>
+                                <a class="dropdown-item" href="categoria?id=<%=item.getIdCategoria()%>"><%=item.getNameCategoria()%></a>
+                                <%}%>
                             </div>
                         </li>
                         <li class="nav-item"><a href="nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
-                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-
+                        <%
+                                //para cerrar o invalidar sesión
+                                //request.getSession().invalidate();
+                                
+                                
+                                Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+                        %>
+                        <%if(user==null){%>
+                        <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam>0</spam></spam>]</a></li>
+                        <%}else{%>
+                        <li class="nav-item"><a href="#" class="nav-link"><%=user.getNomb_usuario()%></a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam><%=PedidoDAO.cantidadPedido(user.getId_usuario())%></spam></spam>]</a></li>
+                        <%}%>
+                        
                     </ul>
                 </div>
             </div>
@@ -128,13 +146,13 @@
                                 <p style="color: #000;"><%=datoProducto.getCarac_producto()%></p>
                             </div>
                         </div>
-                        <p><a href="cart.html" class="btn btn-black py-3 px-5">Añadir al Carro</a></p>
+                        <p><a href="controlador?idProducto=<%=datoProducto.getId_producto()%>" class="btn btn-black py-3 px-5">Añadir al Carro</a></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="ftco-section">
+        <!--<section class="ftco-section">
             <div class="container">
                 <div class="row justify-content-center mb-3 pb-3">
                     <div class="col-md-12 heading-section text-center ftco-animate">
@@ -261,7 +279,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
 
         <footer class="ftco-footer ftco-section">
             <div class="container">
@@ -341,9 +359,9 @@
         <script src="js/main.js"></script>
 
         <script>
-                                $(document).ready(function () {
-
-                                    var quantitiy = 0;
+                                
+            $(document).ready(function(){
+                var quantitiy = 0;
                                     $('.quantity-right-plus').click(function (e) {
 
                                         // Stop acting like a button
@@ -373,8 +391,37 @@
                                             $('#quantity').val(quantity - 1);
                                         }
                                     });
-
-                                });
+                                    
+                                    
+                $('.btn-black').click(function(){
+                    var url = $(this).attr('href');
+                    var idProducto = getURLParameter(url,'idProducto');
+                    var cantidadProducto = $('#quantity').val();
+                    console.log(cantidadProducto)
+                    $.ajax({
+                        url:'controlador',
+                        data:{
+                            idProducto : idProducto,
+                            cantidadProducto : cantidadProducto
+                        },
+                        type: 'POST',
+                        success: function (response, textStatus, jqXHR) {
+                            if(response==1){
+                                window.location.href = 'login'
+                            }else if(response==2){
+                                window.location.href = 'carroCompras'
+                            }else{
+                                $('#counter').html(response);
+                            }
+                                
+                        }
+                    })
+                    return false;
+                })
+                function getURLParameter(url, name) {
+                    return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
+                }
+            })
         </script>
     </body>
 </html>

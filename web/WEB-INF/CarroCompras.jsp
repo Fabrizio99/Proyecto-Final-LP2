@@ -4,6 +4,9 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.dao.PedidoDAO"%>
+<%@page import="Modelo.bean.Pedidos"%>
+<%@page import="Modelo.bean.Usuario"%>
 <%@page import="Modelo.dao.ProductoDAO"%>
 <%@page import="Modelo.dao.CategoriaDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -15,8 +18,10 @@
     <head>
         <%
             ArrayList<Categoria> listadoCategorias = CategoriaDAO.listarProducto();
+            Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+            ArrayList<Pedidos> listaPedidos = PedidoDAO.listarPedidosByUser(user.getId_usuario());
         %>
-        <title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+        <title>Kathiplass</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -83,9 +88,14 @@
                         </li>
                         <li class="nav-item"><a href="nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
+                        <%if(user==null){%>
                         <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
-                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam>0</spam></spam>]</a></li>
+                        <%}else{%>
+                        <li class="nav-item"><a href="#" class="nav-link"><%=user.getNomb_usuario()%></a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam><%=PedidoDAO.cantidadPedido(user.getId_usuario())%></spam></spam>]</a></li>
+                        <%}%>
+                        
                     </ul>
                 </div>
             </div>
@@ -118,17 +128,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <%for (Pedidos item : listaPedidos) {%>
+                                   
                                     <tr class="text-center product-item">
                                         <td class="product-remove"><a href="#" class="remove-button"><span class="ion-ios-close"></span></a></td>
 
-                                        <td class="image-prod"><div class="img" style="background-image:url(images/blancaFlor.jpg);"></div></td>
+                                        <td class="image-prod"><div class="img" style="background-image:url(<%=item.getImgProducto()%>);"></div></td>
 
                                         <td class="product-name">
-                                            <h3>Blanca Flor</h3>
-                                            <p>Harina panadera</p>
+                                            <h3><%=item.getNomProducto()%></h3>
+                                            <p><%=item.getCaractProducto()%></p>
                                         </td>
 
-                                        <td class="price">S/5.99</td>
+                                        <td class="price"><%=item.getPrecioProducto()%></td>
 
                                         <td class="quantity">
                                             <div class="input-group mb-3">
@@ -137,7 +149,7 @@
                                                         <i class="ion-ios-remove" style="color: grey"></i>
                                                     </button>
                                                 </span>
-                                                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+                                                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="<%=item.getCantProducto()%>" min="1" max="100">
                                                 <span class="input-group-btn ml-2">
                                                     <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
                                                         <i class="ion-ios-add" style="color: grey"></i>
@@ -148,35 +160,7 @@
 
                                         <td class="total"></td>
                                     </tr>
-                                    <tr class="text-center product-item">
-                                        <td class="product-remove"><a href="#" class="remove-button"><span class="ion-ios-close"></span></a></td>
-
-                                        <td class="image-prod"><div class="img" style="background-image:url(images/blancaFlor.jpg);"></div></td>
-
-                                        <td class="product-name">
-                                            <h3>Blanca Flor 2</h3>
-                                            <p>Harina panadera</p>
-                                        </td>
-
-                                        <td class="price">S/7.99</td>
-
-                                        <td class="quantity">
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-btn mr-2">
-                                                    <button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
-                                                        <i class="ion-ios-remove" style="color: grey"></i>
-                                                    </button>
-                                                </span>
-                                                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="2" min="1" max="100">
-                                                <span class="input-group-btn ml-2">
-                                                    <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-                                                        <i class="ion-ios-add" style="color: grey"></i>
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="total"></td>
-                                    </tr>
+                                    <%}%>
                                 </tbody>
                             </table>
                         </div>
@@ -364,7 +348,7 @@
                                         //console.log(price)
                                         var quantity = parseFloat(element.getElementsByClassName('input-number')[0].value);
                                         //console.log(quantity)
-                                        element.getElementsByClassName('total')[0].innerHTML = 'S/' + price * quantity
+                                        element.getElementsByClassName('total')[0].innerHTML = 'S/' + (price * quantity).toFixed(2)
                                         var priceTotal = parseFloat(element.getElementsByClassName('total')[0].innerHTML.replace('S/', ''));
                                         total += priceTotal;
                                     })
