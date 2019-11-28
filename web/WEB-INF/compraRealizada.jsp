@@ -1,16 +1,15 @@
 <%-- 
-    Document   : Nosotros
-    Created on : 19/11/2019, 03:43:14 PM
+    Document   : compraRealizada
+    Created on : 28/11/2019, 05:24:30 AM
     Author     : fabri
 --%>
 
 <%@page import="Modelo.dao.PedidoDAO"%>
 <%@page import="Modelo.bean.Usuario"%>
 <%@page import="Modelo.dao.CategoriaDAO"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="Modelo.bean.Categoria"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -98,99 +97,18 @@
                         <li class="nav-item"><a href="#" class="nav-link"><%=user.getNomb_usuario()%></a></li>
                         <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam><%=PedidoDAO.cantidadPedido(user.getId_usuario())%></spam></spam>]</a></li>
                         <%}%>
-                        
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <div class="hero-bread" style="background-color: white ;padding: 0.1px">
-            <div class="container">
-                <div class="row justify-content-center mb-3 pb-3">
-                    <div class="col-md-12 heading-section text-center ftco-animate">
-                        <h2 class="mb-4" style="font-size: 60px">Nosotros</h2>
-                    </div>
-                </div>  
-            </div>
-        </div>
 
-        <section class="ftco-section ftco-no-pb ftco-no-pt bg-light">
+        <section class="ftco-section">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/Repostería1.jpg);">
-                        <!--<a href="https://vimeo.com/45830194" class="icon popup-vimeo d-flex justify-content-center align-items-center">
-                            <span class="icon-play"></span>
-                        </a>-->
-                    </div>
-                    <div class="col-md-7 py-5 wrap-about pb-md-5 ftco-animate">
-                        <div class="heading-section-bold mb-4 mt-md-5">
-                            <div class="ml-md-0">
-                                <h2 class="mb-4">Bienvenido a la tienda virtual de Kathiplass</h2>
-                            </div>
-                        </div>
-                        <div class="pb-md-5">
-                            <p>¡Donde comprar es un placer!</p>
-                            <p>Kathyplass es una pequeña empresa liderada por la Srta. Katherine Del Rosario Inga Mendoza y ubicada en el Centro Comercial Plaza Villa Sur. Esta Empresa tiene como objetivo brindrar la mejor atención al cliente dandole productos de muy buena calidad a precios accesibles para todo aquel que guste de endulzar la vida.</p>
-                            <p><a href="todosProductos" class="btn btn-primary">Compra ahora</a></p>
-                        </div>
-                    </div>
-                </div>
+                <h2>Compra realizada!</h2>
+                <p>Su pedido estará llegando dentro de un plazo no mayor a 3 días.</p>
             </div>
         </section>
-
-
-
-        <section class="ftco-section bg-light">
-            <div class="container">
-                <div class="row no-gutters ftco-services">
-                    <div class="col-lg-3 text-center d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services mb-md-0 mb-4">
-                            <div class="icon bg-color-1 active d-flex justify-content-center align-items-center mb-2">
-                                <span class="flaticon-shipped"></span>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="heading">Envío Gratuito</h3>
-                                <span>Compras mayores a S/100</span>
-                            </div>
-                        </div>      
-                    </div>
-                    <div class="col-lg-3 text-center d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services mb-md-0 mb-4">
-                            <div class="icon bg-color-2 d-flex justify-content-center align-items-center mb-2">
-                                <span class="flaticon-diet"></span>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="heading">Siempre frescos</h3>
-                                <span>Productos bien empaquetados</span>
-                            </div>
-                        </div>    
-                    </div>
-                    <div class="col-lg-3 text-center d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services mb-md-0 mb-4">
-                            <div class="icon bg-color-3 d-flex justify-content-center align-items-center mb-2">
-                                <span class="flaticon-award"></span>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="heading">Calidad Superior</h3>
-                                <span>Productos de alta calidad</span>
-                            </div>
-                        </div>      
-                    </div>
-                    <div class="col-lg-3 text-center d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services mb-md-0 mb-4">
-                            <div class="icon bg-color-4 d-flex justify-content-center align-items-center mb-2">
-                                <span class="flaticon-customer-service"></span>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="heading">Atención al cliente</h3>
-                                <span>Atención 24/7</span>
-                            </div>
-                        </div>      
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <footer class="ftco-footer ftco-section">
             <div class="container">
                 <div class="row">
@@ -247,7 +165,6 @@
 
 
 
-        <!-- loader -->
         <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
@@ -264,9 +181,41 @@
         <script src="js/jquery.animateNumber.min.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/scrollax.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-        <script src="js/google-map.js"></script>
         <script src="js/main.js"></script>
-
+        <script src="js/main2.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('.buy-now').click(function(){
+                    var url = $(this).attr('href');
+                    var idProducto = getURLParameter(url,'idProducto');
+                    var cantidadProducto = getURLParameter(url,'cantidad');
+                    $.ajax({
+                        url:'controlador',
+                        data:{
+                            idProducto : idProducto,
+                            cantidadProducto : cantidadProducto
+                        },
+                        type: 'POST',
+                        success: function (response, textStatus, jqXHR) {
+                            if(response==1){
+                                window.location.href = 'login'
+                            }else if(response==2){
+                                window.location.href = 'carroCompras'
+                            }else{
+                                $('#counter').html(response);
+                            }
+                                
+                            
+                                
+                        }
+                    })
+                    return false;
+                })
+                function getURLParameter(url, name) {
+                    return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
+                }
+            })
+        </script>
+        <!--<script src="https://account.snatchbot.me/script.js"></script><script>window.sntchChat.Init(75396)</script>-->
     </body>
 </html>

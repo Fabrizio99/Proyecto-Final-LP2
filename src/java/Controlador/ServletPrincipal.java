@@ -13,6 +13,7 @@ import Modelo.dao.ProductoDAO;
 import Modelo.dao.UsuarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabri
  */
-@WebServlet(name = "ServletPrincipal", urlPatterns = {"/ServletPrincipal","/nosotros","/contacto","/carroCompras","/caja","/producto","/login","/inicioSesion","/registro","/controlador"})
+@WebServlet(name = "ServletPrincipal", urlPatterns = {"/ServletPrincipal","/nosotros","/contacto","/carroCompras","/caja","/producto","/login","/inicioSesion","/registro","/controlador","/eliminarProducto"})
 public class ServletPrincipal extends HttpServlet {
 
     /**
@@ -37,6 +38,8 @@ public class ServletPrincipal extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    public static int contador = 0;
+    public static Usuario userGlobal = new Usuario();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -51,6 +54,11 @@ public class ServletPrincipal extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/CarroCompras.jsp").forward(request, response);
         }
         if(request.getServletPath().equals("/caja")){
+            Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+            DecimalFormat df = new DecimalFormat("#.00");
+            String precioTotal = df.format(PedidoDAO.precioTotal(user.getId_usuario()));
+            System.out.println("precio total efef"+precioTotal);          
+            request.setAttribute("preciototal", precioTotal);
             request.getRequestDispatcher("WEB-INF/caja.jsp").forward(request, response);
         }
         if(request.getServletPath().equals("/producto")){
@@ -72,6 +80,7 @@ public class ServletPrincipal extends HttpServlet {
             }else{
                 request.getSession().setAttribute("usuario", usuario);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
+                userGlobal = UsuarioDAO.datosUsuario(user, password);
             }
         }
         if(request.getServletPath().equals("/registro")){
@@ -97,26 +106,24 @@ public class ServletPrincipal extends HttpServlet {
                 int idProducto = Integer.parseInt(request.getParameter("idProducto"));
                 int idUsuario = user.getId_usuario();
                 int cantidadProducto = Integer.parseInt(request.getParameter("cantidadProducto"));
-                int id_pu = PedidoDAO.cantidadPedido(idUsuario);
+                //int id_pu = PedidoDAO.cantidadPedido(idUsuario);
                 boolean validador = PedidoDAO.validador(idProducto, idUsuario);
                 if(validador==true){
                     out.println(2);
                 }else{
+                    contador++;
                     PedidoDAO.insertarPedido1(idUsuario, idProducto, cantidadProducto);
-                PedidoDAO.insertarPedido2(idProducto, id_pu+1, cantidadProducto);
+                PedidoDAO.insertarPedido2(idProducto, contador, cantidadProducto);
                 out.println("<spam>"+PedidoDAO.cantidadPedido(idUsuario)+"</spam>");
                 }                
-                
-                /*int idProducto = Integer.parseInt(request.getParameter("idProducto"));
-                int idUsuario = user.getId_usuario();
-                int cantidadProducto = Integer.parseInt(request.getParameter("cantidadProducto"));
-                int id_pu = PedidoDAO.cantidadPedido(idUsuario);
-                PedidoDAO.insertarPedido1(idUsuario, idProducto, cantidadProducto);
-                PedidoDAO.insertarPedido2(idProducto, id_pu+1, cantidadProducto);
-                out.println("<spam>"+PedidoDAO.cantidadPedido(idUsuario)+"</spam>");*/
             }
         }
-        
+        if(request.getServletPath().equals("/eliminarProducto")){
+            Usuario user = (Usuario) request.getSession().getAttribute("usuario");
+            int idProducto = Integer.parseInt(request.getParameter("idProducto"));
+            PedidoDAO.eliminarPedido(user.getId_usuario(),idProducto);
+            request.getRequestDispatcher("WEB-INF/CarroCompras.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

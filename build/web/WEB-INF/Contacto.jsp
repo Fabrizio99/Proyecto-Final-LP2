@@ -4,6 +4,7 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.dao.PedidoDAO"%>
 <%@page import="Modelo.bean.Usuario"%>
 <%@page import="Modelo.dao.CategoriaDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -83,14 +84,20 @@
                         <li class="nav-item"><a href="nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
                         <%
+                                //para cerrar o invalidar sesión
+                                //request.getSession().invalidate();
+                                
+                                
                                 Usuario user = (Usuario) request.getSession().getAttribute("usuario");
                         %>
                         <%if(user==null){%>
                         <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam>0</spam></spam>]</a></li>
                         <%}else{%>
                         <li class="nav-item"><a href="#" class="nav-link"><%=user.getNomb_usuario()%></a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam><%=PedidoDAO.cantidadPedido(user.getId_usuario())%></spam></spam>]</a></li>
                         <%}%>
-                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter">0</spam>]</a></li>
+                        
                     </ul>
                 </div>
             </div>

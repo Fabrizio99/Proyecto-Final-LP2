@@ -51,7 +51,7 @@ public class PedidoDAO {
         
         try {
             int cantPed=0;
-            String sql="select count(id_usuario) from pedido_usuario WHERE id_usuario=?";
+            String sql="select count(id_usuario) from pedido_usuario WHERE id_usuario=? AND flg_pedido = 'N'";
             Connection cn = Coneccion.coneccion.Abrir();
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, id_u);
@@ -81,7 +81,7 @@ public class PedidoDAO {
                     "WHERE pu.id_usuario = ? \n" +
                     "  AND pu.flg_pedido = 'N'\n" +
                     "  AND pu.id_pedidoUsuario = pap.id_pedidoUsuario\n" +
-                    "  AND pap.id_producto = pd.id_producto";
+                    "  AND pap.id_producto = pd.id_producto ";
         ArrayList <Pedidos> lista = new ArrayList();
         Pedidos ped = null;
         Connection cn = Coneccion.coneccion.Abrir();        
@@ -108,14 +108,19 @@ public class PedidoDAO {
      public static void editarCantidad(int cant, int id_p,int id_u){
         
         try {
-            String sql="update pedido_and_producto pap,pedido_usuario pu set pap.cantidad = ? "
-                    + "where pap.id_pedidoUsuario= pu.id_pedidoUsuario and"
-                    + "pap.id_producto = ? and pu.id_usuario = ? ";
+            String sql="update pedidousuario_and_producto pap,pedido_usuario pu ,producto p\n" +
+                            "set pap.cantidad = ? , pu.precio_total_pedido = (p.precio_producto*?)\n" +
+                            "where \n" +
+                            "pap.id_pedidoUsuario= pu.id_pedidoUsuario and \n" +
+                            "pap.id_producto = p.id_producto and\n" +
+                            "pap.id_producto = ? and \n" +
+                            "pu.id_usuario = ? ";
             Connection cn = Coneccion.coneccion.Abrir();
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, cant);
-            pst.setInt(2, id_p);
-            pst.setInt(3, id_u);
+            pst.setInt(2, cant);
+            pst.setInt(3, id_p);
+            pst.setInt(4, id_u);
             pst.executeUpdate();
             cn.close();
             pst.close();
@@ -152,7 +157,7 @@ public class PedidoDAO {
             String sql ="select pap.id_producto \n" +
             "from pedido_usuario pu,pedidousuario_and_producto pap\n" +
             "WHERE pu.id_usuario=? AND pu.id_pedidoUsuario = pap.id_pedidoUsuario and \n"
-                    + "pap.id_producto = ?";
+                    + "pap.id_producto = ? AND pu.flg_pedido = 'N'";
             Connection cn = Coneccion.coneccion.Abrir();            
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, id_u);
@@ -167,5 +172,31 @@ public class PedidoDAO {
             System.out.println("entro al error ::: " + e);
         }
          return listaId_producto.size()>0; 
+    }
+    
+    public static Double precioTotal( int id_u){
+        Double total=0.00;
+        System.out.println("total"+total);
+        try {
+            String sql ="select sum(precio_total_pedido) as total \n" +
+                        "from pedido_usuario \n" +
+                        "where\n" +
+                        "id_usuario = ? and flg_pedido =  'N'";
+            Connection cn = Coneccion.coneccion.Abrir();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, id_u);
+            ResultSet rs = pst.executeQuery();
+           
+            if(rs.next()){
+            total = rs.getDouble("total");
+                System.out.println(total);
+            }
+            rs.close();
+            pst.close();
+            cn.close();
+            return total;
+        } catch (Exception e) {
+            return total;
+        }
     }
 }

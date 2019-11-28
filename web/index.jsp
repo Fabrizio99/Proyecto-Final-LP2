@@ -255,12 +255,12 @@
         <section class="ftco-section img">
             <div class="container">
                 <div class="row justify-content-end">
-                    <img src="images/princesa1.jpg" style="width: 50%; float: left; ">
+                    <img src="<%=listadoProductos.get(40).getImg_producto()%>" style="width: 50%; float: left; ">
                     <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
                         <span class="subheading">Los mejores precios para ti</span>
-                        <h2 class="mb-4">Oferta del Día</h2>
-                        <h3><a href="#">Chocolate</a></h3>
-                        <span class="price">S/10 <a href="#" style="color: #8B4513;">a tan solo S/5</a></span>
+                        <h2 class="mb-4">Producto del Día</h2>
+                        <h3><a href="#"><%=listadoProductos.get(40).getNomb_producto()%></a></h3>
+                        <span class="price">De S/27.00 <a href="#" style="color: #8B4513;">a tan solo S/<%=listadoProductos.get(40).getPrecio_producto()%></a></span>
                         <div id="timer" class="d-flex mt-5">
                             <div class="time" id="days"></div>
                             <div class="time pl-3" id="hours"></div>
@@ -379,6 +379,6 @@
                 }
             })
         </script>
-        <script src="https://account.snatchbot.me/script.js"></script><script>window.sntchChat.Init(75396)</script> 
+        <!--<script src="https://account.snatchbot.me/script.js"></script><script>window.sntchChat.Init(75396)</script>-->
     </body>
 </html>

@@ -19,7 +19,7 @@
         <%
             ArrayList<Categoria> listadoCategorias = CategoriaDAO.listarProducto();
             Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-            ArrayList<Pedidos> listaPedidos = PedidoDAO.listarPedidosByUser(user.getId_usuario());
+            
         %>
         <title>Kathiplass</title>
         <meta charset="utf-8">
@@ -110,7 +110,21 @@
                 </div>  
             </div>
         </div>
-
+        
+        <%if(user==null){%>
+            <section class="ftco-section ftco-cart">
+                <div class="container" >
+                    <img src="images/personanimated.png" alt="Smiley face" height="250" width="250" style="margin-left: 200px; margin-top: -100px">
+                    <div  style="float: right; margin-top:5px ">
+                        Debes iniciar sesión para poder ver tus compras guardadas :)
+                    </div>
+                    <a href="login" class="btn btn-primary" style="float: right; margin-top:-100px ">Iniciar Sesión/Registrarse</a>
+                </div>
+            </section>
+        <%}else{%>
+        <%
+            ArrayList<Pedidos> listaPedidos = PedidoDAO.listarPedidosByUser(user.getId_usuario());
+        %>
         <section class="ftco-section ftco-cart">
             <div class="container">
                 <div class="row">
@@ -127,12 +141,11 @@
                                         <th>Total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="pedido-container">
                                     <%for (Pedidos item : listaPedidos) {%>
                                    
                                     <tr class="text-center product-item">
-                                        <td class="product-remove"><a href="#" class="remove-button"><span class="ion-ios-close"></span></a></td>
-
+                                        <td class="product-remove"><a href="eliminarProducto?idProducto=<%=item.getIdProducto()%>" class="remove-button"><span class="ion-ios-close"></span></a></td>
                                         <td class="image-prod"><div class="img" style="background-image:url(<%=item.getImgProducto()%>);"></div></td>
 
                                         <td class="product-name">
@@ -145,13 +158,13 @@
                                         <td class="quantity">
                                             <div class="input-group mb-3">
                                                 <span class="input-group-btn mr-2">
-                                                    <button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
+                                                    <button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="" href="cantidadProducto?idProducto=<%=item.getIdProducto()%>">
                                                         <i class="ion-ios-remove" style="color: grey"></i>
                                                     </button>
                                                 </span>
                                                 <input type="text" id="quantity" name="quantity" class="form-control input-number" value="<%=item.getCantProducto()%>" min="1" max="100">
                                                 <span class="input-group-btn ml-2">
-                                                    <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+                                                    <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="" href="cantidadProducto?idProducto=<%=item.getIdProducto()%>">
                                                         <i class="ion-ios-add" style="color: grey"></i>
                                                     </button>
                                                 </span>
@@ -175,14 +188,6 @@
                                 <span>Subtotal</span>
                                 <span id="subtotal"></span>
                             </p>
-                            <!--<p class="d-flex">
-                                <span>Delivery</span>
-                                <span>$0.00</span>
-                            </p>-->
-                            <!--<p class="d-flex">
-                                <span>Discount</span>
-                                <span>$3.00</span>
-                            </p>-->
                             <hr>
                             <p class="d-flex total-price">
                                 <span>Total</span>
@@ -194,7 +199,7 @@
                 </div>
             </div>
         </section>
-
+        <%}%>
         <footer class="ftco-footer ftco-section">
             <div class="container">
                 <div class="row">
@@ -268,99 +273,84 @@
         <script src="js/jquery.animateNumber.min.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/scrollax.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="js/google-map.js"></script>
         <script src="js/main.js"></script>
 
         <script>
-                                /*$(document).ready(function () {
-                                 
-                                 var quantitiy = 0;
-                                 $('.quantity-right-plus').click(function (e) {
-                                 
-                                 // Stop acting like a button
-                                 e.preventDefault();
-                                 // Get the field name
-                                 var quantity = parseInt($('#quantity').val());
-                                 
-                                 // If is not undefined
-                                 
-                                 $('#quantity').val(quantity + 1);
-                                 
-                                 
-                                 // Increment
-                                 
-                                 });
-                                 
-                                 $('.quantity-left-minus').click(function (e) {
-                                 // Stop acting like a button
-                                 e.preventDefault();
-                                 // Get the field name
-                                 var quantity = parseInt($('#quantity').val());
-                                 
-                                 // If is not undefined
-                                 
-                                 // Increment
-                                 if (quantity > 0) {
-                                 $('#quantity').val(quantity - 1);
-                                 }
-                                 });
-                                 
-                                 });*/
+            function getURLParameter(url, name) {
+                return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
+            }
+    
+            $(document).ready(function(){
+                $('.quantity-left-minus').click(function (){
+                    var nodeQuantity = $(this).parent().parent().children('.input-number')
+                    var quantity = parseInt(nodeQuantity.val())
+                    if(quantity>1){
+                        quantity = quantity - 1
+                    }
+                    nodeQuantity.val(quantity)
+                    var newQuantity = nodeQuantity.val()
+                    var url = $(this).attr('href');
+                    var idProducto = getURLParameter(url,'idProducto');
+                    $.ajax({
+                        url: "cantidadProducto",
+                        data: {idProducto:idProducto, cantidad: newQuantity},
+                        type: 'POST',
+                        success: function (response, textStatus, jqXHR) {
+                        }
+                    })
+                    updateTotal()
+                })
+                
+                $('.quantity-right-plus').click(function (){
+                    var nodeQuantity = $(this).parent().parent().children('.input-number')
+                    var quantity = parseInt(nodeQuantity.val())
+                    quantity = quantity + 1
+                    nodeQuantity.val(quantity)
+                    var newQuantity = nodeQuantity.val()
+                    var url = $(this).attr('href');
+                    var idProducto = getURLParameter(url,'idProducto');
+                    $.ajax({
+                        url: "cantidadProducto",
+                        data: {idProducto:idProducto, cantidad: newQuantity},
+                        type: 'POST',
+                        success: function (response, textStatus, jqXHR) {
+                        }
+                    })
+                    updateTotal()
+                })
+            })
 
-                                var removeButtons = Array.from(document.getElementsByClassName('remove-button'))
-                                removeButtons.forEach(function (element) {
-                                    element.addEventListener('click', function (event) {
-                                        element.parentElement.parentElement.remove()
-                                        updateTotal();
-                                    })
-                                })
-                                var quantityLeft = Array.from(document.getElementsByClassName('quantity-left-minus'))
-                                quantityLeft.forEach(function (element) {
-                                    element.addEventListener('click', function () {
-                                        var quantity = parseInt(element.parentElement.parentElement.getElementsByClassName('input-number')[0].value)
-                                        if (quantity > 1) {
-                                            console.log('es mayor o igual a 1')
-                                            quantity = quantity - 1
-                                        } else {
-                                            console.log('no')
-                                        }
+            /*var quantityRight = Array.from(document.getElementsByClassName('quantity-right-plus'));
+            console.log(quantityRight)
+            quantityRight.forEach(function (element) {
+                element.addEventListener('click', function () {
+                    var quantity = parseInt(element.parentElement.parentElement.getElementsByClassName('input-number')[0].value)
+                    quantity = quantity + 1
+                    element.parentElement.parentElement.getElementsByClassName('input-number')[0].value = quantity
+                    updateTotal()
+                })
+            })*/
+            function updateTotal() {
+                var productItems = Array.from(document.getElementsByClassName('product-item'));
+                var total = 0;
+                productItems.forEach(function (element) {
+                    var price = parseFloat(element.getElementsByClassName('price')[0].innerHTML.replace('S/', ''));
+                    //console.log(price)
+                    var quantity = parseFloat(element.getElementsByClassName('input-number')[0].value);
+                    //console.log(quantity)
+                    element.getElementsByClassName('total')[0].innerHTML = 'S/' + (price * quantity).toFixed(2)
+                    var priceTotal = parseFloat(element.getElementsByClassName('total')[0].innerHTML.replace('S/', ''));
+                    total += priceTotal;
+                })
+                var subtotal = document.getElementById('subtotal');
+                //console.log(subtotal.innerHTML)
+                var totalPrice = document.getElementById('total');
+                subtotal.innerHTML = 'S/' + total.toFixed(2);
+                totalPrice.innerHTML = 'S/' + total.toFixed(2);
 
-                                        element.parentElement.parentElement.getElementsByClassName('input-number')[0].value = quantity
-                                        updateTotal()
-                                    })
-                                })
-                                var quantityRight = Array.from(document.getElementsByClassName('quantity-right-plus'));
-                                console.log(quantityRight)
-                                quantityRight.forEach(function (element) {
-                                    element.addEventListener('click', function () {
-                                        var quantity = parseInt(element.parentElement.parentElement.getElementsByClassName('input-number')[0].value)
-                                        quantity = quantity + 1
-                                        element.parentElement.parentElement.getElementsByClassName('input-number')[0].value = quantity
-                                        updateTotal()
-                                    })
-                                })
-                                function updateTotal() {
-                                    var productItems = Array.from(document.getElementsByClassName('product-item'));
-                                    var total = 0;
-                                    productItems.forEach(function (element) {
-                                        var price = parseFloat(element.getElementsByClassName('price')[0].innerHTML.replace('S/', ''));
-                                        //console.log(price)
-                                        var quantity = parseFloat(element.getElementsByClassName('input-number')[0].value);
-                                        //console.log(quantity)
-                                        element.getElementsByClassName('total')[0].innerHTML = 'S/' + (price * quantity).toFixed(2)
-                                        var priceTotal = parseFloat(element.getElementsByClassName('total')[0].innerHTML.replace('S/', ''));
-                                        total += priceTotal;
-                                    })
-                                    var subtotal = document.getElementById('subtotal');
-                                    //console.log(subtotal.innerHTML)
-                                    var totalPrice = document.getElementById('total');
-                                    subtotal.innerHTML = 'S/' + total;
-                                    totalPrice.innerHTML = 'S/' + total;
-
-                                }
-                                updateTotal()
-
+            }
+            updateTotal()
         </script>
 
     </body>

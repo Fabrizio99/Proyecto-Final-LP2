@@ -4,6 +4,7 @@
     Author     : fabri
 --%>
 
+<%@page import="Modelo.dao.PedidoDAO"%>
 <%@page import="Modelo.dao.CategoriaDAO"%>
 <%@page import="Modelo.bean.Categoria"%>
 <%@page import="java.util.ArrayList"%>
@@ -14,8 +15,9 @@
     <head>
         <%
             ArrayList<Categoria> listadoCategorias = CategoriaDAO.listarProducto();
+            String precioTotal = (String) request.getAttribute("preciototal");
         %>
-        <title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+        <title>Kathiplass</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -82,19 +84,20 @@
                         </li>
                         <li class="nav-item"><a href="nosotros" class="nav-link">Nosotros</a></li>
                         <li class="nav-item"><a href="contacto" class="nav-link">Contáctanos</a></li>
-                        <%
-                                //para cerrar o invalidar sesión
+                            <%
+                                    //para cerrar o invalidar sesión
                                 //request.getSession().invalidate();
-                                
-                                
+
                                 Usuario user = (Usuario) request.getSession().getAttribute("usuario");
-                        %>
-                        <%if(user==null){%>
+                            %>
+                            <%if (user == null) {%>
                         <li class="nav-item"><a href="login" class="nav-link"><img src="images/avatar.png" width="18"></a></li>
-                        <%}else{%>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam>0</spam></spam>]</a></li>
+                                        <%} else {%>
                         <li class="nav-item"><a href="#" class="nav-link"><%=user.getNomb_usuario()%></a></li>
-                        <%}%>
-                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter">0</spam>]</a></li>
+                        <li class="nav-item cta cta-colored"><a href="carroCompras" class="nav-link"><span class="icon-shopping_cart"></span>[<spam id="counter"><spam><%=PedidoDAO.cantidadPedido(user.getId_usuario())%></spam></spam>]</a></li>
+                                        <%}%>
+
                     </ul>
                 </div>
             </div>
@@ -112,190 +115,173 @@
 
         <section class="ftco-section">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-7 ftco-animate">
-                        <form action="#" class="billing-form">
+                <form action="pasarela" class="billing-form" type="post">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-7 ftco-animate">
                             <h3 class="mb-4 billing-heading">Detalles de Pago</h3>
-                            <div class="row align-items-end">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Nombre</label>
-                                        <input type="text" class="form-control" placeholder="" name="nombre">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="lastname">Apellidos</label>
-                                        <input type="text" class="form-control" placeholder="" name="apellido">
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="firstname">Teléfono Celular</label>
-                                        <input type="text" class="form-control" placeholder="" name="telefono1">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="lastname">Otro Teléfono (opcional)</label>
-                                        <input type="text" class="form-control" placeholder="" name="telefono2">
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="country">Dirección</label>
-                                        <input type="text" class="form-control" placeholder="" name="direccion">
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="towncity">Referencia</label>
-                                        <input type="text" class="form-control" placeholder="" name="referencia">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="postcodezip">Departamento</label>
-                                        <input type="text" class="form-control" placeholder="" name="departamento">
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="phone">Provincia</label>
-                                        <input type="text" class="form-control" placeholder="" name="provincia">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="emailaddress">Distrito</label>
-                                        <input type="text" class="form-control" placeholder="" name="distrito">
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                                <!--<div class="col-md-12">
-                                    <div class="form-group mt-4">
-                                        <div class="radio">
-                                            <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
-                                            <label><input type="radio" name="optradio"> Ship to different address</label>
+                                <div class="row align-items-end">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nombre</label>
+                                            <input type="text" class="form-control" placeholder="" name="nombre">
                                         </div>
                                     </div>
-                                </div>-->
-                            </div>
-                        </form><!-- END -->
-                    </div>
-                    <div class="col-xl-5">
-                        <div class="row mt-5 pt-3">
-                            <div class="col-md-12 d-flex mb-5">
-                                <div class="cart-detail cart-total p-3 p-md-4">
-                                    <h3 class="billing-heading mb-4">Compra</h3>
-                                    <p class="d-flex">
-                                        <span>Subtotal</span>
-                                        <span>$20.60</span>
-                                    </p>
-                                    <!--<p class="d-flex">
-                                        <span>Delivery</span>
-                                        <span>$0.00</span>
-                                    </p>
-                                    <p class="d-flex">
-                                        <span>Discount</span>
-                                        <span>$3.00</span>
-                                    </p>-->
-                                    <hr>
-                                    <p class="d-flex total-price">
-                                        <span>Total</span>
-                                        <span>$17.60</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-12" id="paypal">
-                                <div class="cart-detail p-3 p-md-4">
-                                    <h3 class="billing-heading mb-4">Método de Pago</h3>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="lastname">Apellidos</label>
+                                            <input type="text" class="form-control" placeholder="" name="apellido">
+                                        </div>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstname">Teléfono Celular</label>
+                                            <input type="text" class="form-control" placeholder="" name="telefono1">
+                                        </div>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="w-100"></div>
+
+                                    <h3>Datos de tarjeta</h3>
+                                    <div class="w-100"></div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="phone">Número de tarjeta</label>
+                                            <input type="text" class="form-control" placeholder="" name="numeroTarjeta">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="emailaddress">Fecha de caducidad</label>
+                                            <input type="text" class="form-control" placeholder="mm/yy" name="fechaCaducidad">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="emailaddress">CVV</label>
+                                            <input type="text" class="form-control" placeholder="" name="cvv">
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-md-12">
+                                        <div class="form-group mt-4">
                                             <div class="radio">
-                                                <label><input type="radio" name="optradio" class="mr-2">Pago Directo</label>
+                                                <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
+                                                <label><input type="radio" name="optradio"> Ship to different address</label>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <div class="radio">
-                                                <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" value="" class="mr-2">He leído y aceptado los términos y condiciones</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p><a href="#"class="btn btn-primary py-3 px-4">Realizar Compra</a></p>
+                                    </div>-->
                                 </div>
-                            </div>
                         </div>
-                    </div> <!-- .col-md-8 -->
-                </div>
+                        <div class="col-xl-5">
+                            <div class="row mt-5 pt-3">
+                                <div class="col-md-12 d-flex mb-5">
+                                    <div class="cart-detail cart-total p-3 p-md-4">
+                                        <h3 class="billing-heading mb-4">Compra</h3>
+                                        <p class="d-flex">
+                                            <span>Subtotal</span>
+                                            <span>S/ ${preciototal}</span>
+                                        </p>
+                                        <!--<p class="d-flex">
+                                            <span>Delivery</span>
+                                            <span>$0.00</span>
+                                        </p>
+                                        <p class="d-flex">
+                                            <span>Discount</span>
+                                            <span>$3.00</span>
+                                        </p>-->
+                                        <hr>
+                                        <p class="d-flex total-price">
+                                            <span>Total</span>
+                                            <span>S/ ${preciototal}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" id="paypal">
+                                    <div class="cart-detail p-3 p-md-4">
+                                        <h3 class="billing-heading mb-4">Método de Pago</h3>
+                                        <!--<div class="form-group">
+                                            <div class="col-md-12">
+                                                <div class="radio">
+                                                    <label><input type="radio" name="optradio" class="mr-2">Pago Directo</label>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <div class="radio">
+                                                    <label><input type="radio" name="optradio" class="mr-2">Pagar con Culqi</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" class="mr-2">He leído y aceptado los términos y condiciones</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p><input type="submit" class="btn btn-primary py-3 px-4" value="Realizar Compra"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- .col-md-8 -->
+                    </div>
+                </form>
             </div>
 
             <footer class="ftco-footer ftco-section">
-            <div class="container">
-                <div class="row">
-                    <div class="mouse">
-                        <a href="#" class="mouse-icon">
-                            <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
-                        </a>
-                    </div>
-                </div>
-                <div class="row mb-5">
-                    <div class="col-md">
-                        <div class="ftco-footer-widget mb-4">
-                            <h2 class="ftco-heading-2">Kathiplass</h2>
-                            <p>Venta de productos de calidad y a un buen precio.</p>
-                            <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                            </ul>
+                <div class="container">
+                    <div class="row">
+                        <div class="mouse">
+                            <a href="#" class="mouse-icon">
+                                <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+                            </a>
                         </div>
                     </div>
-                    <div class="col-md">
-                        <div class="ftco-footer-widget mb-4 ml-md-5">
-                            <h2 class="ftco-heading-2">Menú</h2>
-                            <ul class="list-unstyled">
-                                <li><a href="#" class="py-2 d-block">Nosotros</a></li>
-                                <li><a href="#" class="py-2 d-block">Contáctanos</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="ftco-footer-widget mb-4">
-                            <h2 class="ftco-heading-2">¿Alguna consulta?</h2>
-                            <div class="block-23 mb-3">
-                                <ul>
-                                    <li><span class="icon icon-map-marker"></span><span class="text">Mercado Plaza Villa Sur, puesto A-29. Villa el Salvador</span></li>
-                                    <li><a href="#"><span class="icon icon-phone"></span><span class="text">+51 999 999 999</span></a></li>
-                                    <li><a href="#"><span class="icon icon-envelope"></span><span class="text">contactos@kathiplass.com</span></a></li>
+                    <div class="row mb-5">
+                        <div class="col-md">
+                            <div class="ftco-footer-widget mb-4">
+                                <h2 class="ftco-heading-2">Kathiplass</h2>
+                                <p>Venta de productos de calidad y a un buen precio.</p>
+                                <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                                    <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                                    <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                                    <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
                                 </ul>
                             </div>
                         </div>
+                        <div class="col-md">
+                            <div class="ftco-footer-widget mb-4 ml-md-5">
+                                <h2 class="ftco-heading-2">Menú</h2>
+                                <ul class="list-unstyled">
+                                    <li><a href="#" class="py-2 d-block">Nosotros</a></li>
+                                    <li><a href="#" class="py-2 d-block">Contáctanos</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="ftco-footer-widget mb-4">
+                                <h2 class="ftco-heading-2">¿Alguna consulta?</h2>
+                                <div class="block-23 mb-3">
+                                    <ul>
+                                        <li><span class="icon icon-map-marker"></span><span class="text">Mercado Plaza Villa Sur, puesto A-29. Villa el Salvador</span></li>
+                                        <li><a href="#"><span class="icon icon-phone"></span><span class="text">+51 999 999 999</span></a></li>
+                                        <li><a href="#"><span class="icon icon-envelope"></span><span class="text">contactos@kathiplass.com</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 text-center">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
 
-                        <p>
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos los derechos reservados | Página web hecha por </i><a href="#" target="_blank" style="color: #F08080;">ANFAVA</a>
-                        </p>
+                            <p>
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos los derechos reservados | Página web hecha por </i><a href="#" target="_blank" style="color: #F08080;">ANFAVA</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
 
 
 
@@ -323,40 +309,40 @@
             <script>paypal.Buttons().render('body');</script>
 
             <script>
-                                    $(document).ready(function () {
+                $(document).ready(function () {
 
-                                        var quantitiy = 0;
-                                        $('.quantity-right-plus').click(function (e) {
+                    var quantitiy = 0;
+                    $('.quantity-right-plus').click(function (e) {
 
-                                            // Stop acting like a button
-                                            e.preventDefault();
-                                            // Get the field name
-                                            var quantity = parseInt($('#quantity').val());
+                        // Stop acting like a button
+                        e.preventDefault();
+                        // Get the field name
+                        var quantity = parseInt($('#quantity').val());
 
-                                            // If is not undefined
+                        // If is not undefined
 
-                                            $('#quantity').val(quantity + 1);
+                        $('#quantity').val(quantity + 1);
 
 
-                                            // Increment
+                        // Increment
 
-                                        });
+                    });
 
-                                        $('.quantity-left-minus').click(function (e) {
-                                            // Stop acting like a button
-                                            e.preventDefault();
-                                            // Get the field name
-                                            var quantity = parseInt($('#quantity').val());
+                    $('.quantity-left-minus').click(function (e) {
+                        // Stop acting like a button
+                        e.preventDefault();
+                        // Get the field name
+                        var quantity = parseInt($('#quantity').val());
 
-                                            // If is not undefined
+                        // If is not undefined
 
-                                            // Increment
-                                            if (quantity > 0) {
-                                                $('#quantity').val(quantity - 1);
-                                            }
-                                        });
+                        // Increment
+                        if (quantity > 0) {
+                            $('#quantity').val(quantity - 1);
+                        }
+                    });
 
-                                    });
+                });
             </script>
             <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
             <script>paypal.Buttons().render('body');</script>
